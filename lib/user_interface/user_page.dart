@@ -523,7 +523,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
     }
     else {
     return ListTile(
-    leading: const Icon(Icons.padding),
+    leading: const Icon(Icons.group),
 
     title: Text(document['GroupName']),
     subtitle: Text(document['GroupActivity']),
@@ -606,8 +606,6 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                 return ListTile(
                                   leading: const Icon(Icons.group),
                                   title:
-                                    /* crossAxisAlignment:
-                                      CrossAxisAlignment.start,*/
 
                                         Column(
                                   children: [
