@@ -75,6 +75,6 @@ class LocalizationService extends Translations {
   String getCurrentLang() {
     final box = GetStorage();
 
-    return box.read('lng') != null ? box.read('lng') : "English";
+    return box.read('lng') ?? "English";
   }
 }

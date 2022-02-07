@@ -1,35 +1,32 @@
 
-// ignore_for_file: file_names, non_constant_identifier_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/main.dart';
-import 'package:luqiaapp/operation/group_operation.dart';
 import 'login.dart';
 
-class GroupUserPage extends StatefulWidget {
-  const GroupUserPage({Key? key}) : super(key: key);
+class MeetingCreation extends StatefulWidget {
+  const MeetingCreation({Key? key}) : super(key: key);
 
   @override
   // ignore: avoid_types_as_parameter_names
-  _GroupUserPageState createState() => _GroupUserPageState();
+  _MeetingCreationState createState() => _MeetingCreationState();
 }
 
-class _GroupUserPageState extends State<GroupUserPage>
+class _MeetingCreationState extends State<MeetingCreation>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  final TextEditingController _GroupNameController = TextEditingController(text: "");
-  final TextEditingController _GroupActivityController =
+  TextEditingController _GroupNameController = TextEditingController(text: "");
+  TextEditingController _GroupActivityController =
   TextEditingController(text: "");
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 1, vsync: this);
-  //  _GroupNameController = TextEditingController(text: "");
-  //  _GroupActivityController = TextEditingController(text: "");
+    _GroupNameController = TextEditingController(text: "");
+    _GroupActivityController = TextEditingController(text: "");
   }
 
   final _form = GlobalKey<FormState>();
@@ -50,17 +47,17 @@ class _GroupUserPageState extends State<GroupUserPage>
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             //  UserHelper.saveUser(snapshot.data!);
-            var currentUser = FirebaseAuth.instance.currentUser;
-            var id = currentUser!.uid;
-            var email = currentUser.email;
+           // var currentUser = FirebaseAuth.instance.currentUser;
+           // var id = currentUser!.uid;
+           // var email = currentUser.email;
             Size size = MediaQuery.of(context).size;
 
-           // final uid = currentUser.uid;
+            // final uid = currentUser.uid;
             // Dashboard.userDashboard(uid);
 
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Create Group'),
+                title: const Text('Create Meeting '),
                 leading: IconButton(
                   onPressed: () {
                     Navigator.push(
@@ -85,12 +82,7 @@ class _GroupUserPageState extends State<GroupUserPage>
                 Scaffold(
                   body: Form(
                     key: _form,
-                    /*SingleChildScrollView(
-                  child:  Padding(
-                    padding: const EdgeInsets.all(
-                        16.0 ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,*/
+
                     child: ListView(children: <Widget>[
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +95,7 @@ class _GroupUserPageState extends State<GroupUserPage>
                           SizedBox(height: size.height * 0.03),
                           const SizedBox(height: 100.0),
                           const Text(
-                            "Create Group",
+                            "Create Meeting",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20.0),
                           ),
@@ -111,10 +103,10 @@ class _GroupUserPageState extends State<GroupUserPage>
                           TextFormField(
                             controller: _GroupNameController,
                             decoration: const InputDecoration(
-                                hintText: "Enter Group Name"),
+                                hintText: "Enter Meeting Title"),
                             validator: (text) {
                               if (/*!(text!.contains()) &&*/ text!.isEmpty) {
-                                return "Enter a valid Group name";
+                                return "Enter a valid Meeting Title";
                               }
                               return null;
                             },
@@ -123,10 +115,10 @@ class _GroupUserPageState extends State<GroupUserPage>
                           TextFormField(
                             controller: _GroupActivityController,
                             decoration: const InputDecoration(
-                                hintText: "Enter Group Activity"),
+                                hintText: "Enter Meeting Description"),
                             validator: (text) {
-                              if (text!.isEmpty) {
-                                return "Enter valid Group Activity";
+                              if ( text!.isEmpty) {
+                                return "Enter a valid Meeting Description";
                               }
                               return null;
                             },
@@ -139,22 +131,22 @@ class _GroupUserPageState extends State<GroupUserPage>
                                 _saveForm();
                                 if (_GroupActivityController.text.isEmpty ||
                                     _GroupNameController.text.isEmpty) {
-                                                             return;
+                                  return;
                                 }
 
                                 try {
-                                  GroupOperation.createNewGroup(
+                                  /*GroupOperation.createNewGroup(
                                       id,
                                       _GroupNameController.text,
                                       _GroupActivityController.text,
                                       email!);
-
+*/
 
                                   if (kDebugMode) {
                                     print("added successful");
                                   }
-                                                                //       Navigator.pop( context );
-                                  Navigator.push(
+                                  //       Navigator.pop( context );
+                                  Navigator.pop(
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) => const MainScreen(),

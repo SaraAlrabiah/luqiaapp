@@ -9,13 +9,11 @@ import 'package:luqiaapp/user_interface/admin_page.dart';
 import 'package:luqiaapp/user_interface/company_page.dart';
 import 'package:luqiaapp/user_interface/login.dart';
 import 'package:luqiaapp/user_interface/user_page.dart';
-
 import 'localization/localization_services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
-  //await Firebase.initializeApp();
   runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
 
@@ -78,7 +76,7 @@ class MainScreen extends StatelessWidget {
                   } else if ((user)['role'] == 'normalUser') {
                     return  UserPage(uid: uid,);
                   } else if ((user)['role'] == 'companyUser') {
-                    return  CompanyUserPage();
+                    return  const CompanyUserPage();
                   } else {
                     return LoginPage();
                   }

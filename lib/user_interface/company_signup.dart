@@ -145,8 +145,7 @@ class _CompanySignupPage extends State<CompanySignupPage> {
                             print(users);
                             if (users != null) {
                               UserHelper.companyInfo(users , _companyNameController.text, _companySpecificationController.text, _companyAddressController.text );
-                              print(users);
-                              print("signup successful");
+                             
                               //       Navigator.pop( context );
                               AuthHelper.logOut();
                               Navigator.push(
