@@ -220,7 +220,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
                                 // var currentUser = FirebaseAuth.instance.currentUser;
-                                 Dashboard.usersCount(uid);
+
                    //   var  email = currentUser!.email;
                               final docs = snapshot.data!.docs;
                          //     Dashboard.usersCount();

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/main.dart';
+import 'package:luqiaapp/user_interface/setting.dart';
 import 'login.dart';
 
 class MeetingCreation extends StatefulWidget {
@@ -20,6 +21,9 @@ class _MeetingCreationState extends State<MeetingCreation>
   TextEditingController _GroupNameController = TextEditingController(text: "");
   TextEditingController _GroupActivityController =
   TextEditingController(text: "");
+ // TextEditingController _DateController = TextEditingController(text: "");
+ // TextEditingController _LocationController = TextEditingController(text: "");
+
 
   @override
   void initState() {
@@ -27,6 +31,9 @@ class _MeetingCreationState extends State<MeetingCreation>
     _tabController = TabController(length: 1, vsync: this);
     _GroupNameController = TextEditingController(text: "");
     _GroupActivityController = TextEditingController(text: "");
+   // _DateController = TextEditingController(text: "");
+  //  _LocationController = TextEditingController(text: "");
+
   }
 
   final _form = GlobalKey<FormState>();
@@ -47,7 +54,7 @@ class _MeetingCreationState extends State<MeetingCreation>
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             //  UserHelper.saveUser(snapshot.data!);
-           // var currentUser = FirebaseAuth.instance.currentUser;
+      //    var currentUser = FirebaseAuth.instance.currentUser;
            // var id = currentUser!.uid;
            // var email = currentUser.email;
             Size size = MediaQuery.of(context).size;
@@ -83,12 +90,13 @@ class _MeetingCreationState extends State<MeetingCreation>
                   body: Form(
                     key: _form,
 
-                    child: ListView(children: <Widget>[
+                    child: ListView(
+                        children: <Widget>[
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(height: size.height * 0.03),
-                          /*  SvgPicture.asset(
+                         /* SvgPicture.asset(
                             "assets/icons/login.svg",
                             height: size.height * 0.35,
                           ),*/
@@ -122,6 +130,43 @@ class _MeetingCreationState extends State<MeetingCreation>
                               }
                               return null;
                             },
+                          ),
+                          Row(
+
+                           children:  [
+                            IconButton(
+
+                              icon: const Icon(Icons.date_range_rounded),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const Setting()),
+                                );
+                              },
+                            ),
+                             const Text('Meeting Date', style: TextStyle(
+                                 fontWeight: FontWeight.bold, fontSize: 20.0),),
+
+
+                           ],
+                          ), Row(
+
+                            children:  [
+                              IconButton(
+
+                                icon: const Icon(Icons.location_on_outlined),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const Setting()),
+                                  );
+                                },
+                              ),
+                              const Text('Meeting Location', style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20.0),),
+
+
+                            ],
                           ),
                           const SizedBox(height: 10.0),
                           const SizedBox(height: 10.0),
@@ -170,3 +215,4 @@ class _MeetingCreationState extends State<MeetingCreation>
         });
   }
 }
+
