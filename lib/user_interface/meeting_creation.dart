@@ -4,23 +4,36 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/main.dart';
-import 'package:luqiaapp/user_interface/setting.dart';
+import 'package:luqiaapp/user_interface/time_page.dart';
 import 'login.dart';
 
 class MeetingCreation extends StatefulWidget {
-  const MeetingCreation({Key? key}) : super(key: key);
+
+
+
+  MeetingCreation({Key? key, this.groupId  }) : super(key: key);
+  final  groupId ;
+
 
   @override
-  // ignore: avoid_types_as_parameter_names
-  _MeetingCreationState createState() => _MeetingCreationState();
+  // ignore: no_logic_in_create_state
+  _MeetingCreationState createState() => _MeetingCreationState(groupId );
 }
 
-class _MeetingCreationState extends State<MeetingCreation>
-    with TickerProviderStateMixin {
+
+
+class _MeetingCreationState extends State<MeetingCreation> with TickerProviderStateMixin {
+  var groupId;
+
+  _MeetingCreationState(this.groupId);
   late TabController _tabController;
-  TextEditingController _GroupNameController = TextEditingController(text: "");
-  TextEditingController _GroupActivityController =
+  TextEditingController _MeetingTitleController = TextEditingController(text: "");
+  TextEditingController _MeetingDescriptionController =
   TextEditingController(text: "");
+
+
+
+
  // TextEditingController _DateController = TextEditingController(text: "");
  // TextEditingController _LocationController = TextEditingController(text: "");
 
@@ -29,8 +42,8 @@ class _MeetingCreationState extends State<MeetingCreation>
   void initState() {
     super.initState();
     _tabController = TabController(length: 1, vsync: this);
-    _GroupNameController = TextEditingController(text: "");
-    _GroupActivityController = TextEditingController(text: "");
+    _MeetingTitleController = TextEditingController(text: "");
+    _MeetingDescriptionController = TextEditingController(text: "");
    // _DateController = TextEditingController(text: "");
   //  _LocationController = TextEditingController(text: "");
 
@@ -54,11 +67,10 @@ class _MeetingCreationState extends State<MeetingCreation>
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             //  UserHelper.saveUser(snapshot.data!);
-      //    var currentUser = FirebaseAuth.instance.currentUser;
+          var currentUser = FirebaseAuth.instance.currentUser;
            // var id = currentUser!.uid;
-           // var email = currentUser.email;
+            var email = currentUser?.email;
             Size size = MediaQuery.of(context).size;
-
             // final uid = currentUser.uid;
             // Dashboard.userDashboard(uid);
 
@@ -109,7 +121,7 @@ class _MeetingCreationState extends State<MeetingCreation>
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
-                            controller: _GroupNameController,
+                            controller: _MeetingTitleController,
                             decoration: const InputDecoration(
                                 hintText: "Enter Meeting Title"),
                             validator: (text) {
@@ -121,7 +133,7 @@ class _MeetingCreationState extends State<MeetingCreation>
                           ),
                           const SizedBox(height: 10.0),
                           TextFormField(
-                            controller: _GroupActivityController,
+                            controller: _MeetingDescriptionController,
                             decoration: const InputDecoration(
                                 hintText: "Enter Meeting Description"),
                             validator: (text) {
@@ -131,7 +143,7 @@ class _MeetingCreationState extends State<MeetingCreation>
                               return null;
                             },
                           ),
-                          Row(
+                         /* Row(
 
                            children:  [
                             IconButton(
@@ -140,14 +152,14 @@ class _MeetingCreationState extends State<MeetingCreation>
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const Setting()),
+                                  MaterialPageRoute(builder: (context) => const TimePaker ()),
                                 );
                               },
                             ),
                              const Text('Meeting Date', style: TextStyle(
                                  fontWeight: FontWeight.bold, fontSize: 20.0),),
-
-
+                               Text(dateTime.toString(), style: const TextStyle(
+                                 fontWeight: FontWeight.bold, fontSize: 20.0),),
                            ],
                           ), Row(
 
@@ -167,34 +179,25 @@ class _MeetingCreationState extends State<MeetingCreation>
 
 
                             ],
-                          ),
+                          ),*/
                           const SizedBox(height: 10.0),
                           const SizedBox(height: 10.0),
                           ElevatedButton(
                               child: const Text("Add"),
                               onPressed: () async {
                                 _saveForm();
-                                if (_GroupActivityController.text.isEmpty ||
-                                    _GroupNameController.text.isEmpty) {
+                                if (_MeetingDescriptionController.text.isEmpty ||
+                                    _MeetingTitleController.text.isEmpty) {
                                   return;
                                 }
 
                                 try {
-                                  /*GroupOperation.createNewGroup(
-                                      id,
-                                      _GroupNameController.text,
-                                      _GroupActivityController.text,
-                                      email!);
-*/
-
-                                  if (kDebugMode) {
-                                    print("added successful");
-                                  }
-                                  //       Navigator.pop( context );
-                                  Navigator.pop(
+print('here');
+                                //var meetingId =   MeetingOperation.  createNewMeeting(_GroupActivityController.text,_GroupNameController.text , groupId , email! );
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => const MainScreen(),
+                                        builder: (_) =>     DatetimePickerWidget(meetingTitle: _MeetingTitleController.text , meetingDescreiption: _MeetingDescriptionController.text, groupId: groupId, email: email,  ),
                                       ));
                                 } catch (e) {
                                   if (kDebugMode) {

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 
 class Dashboard {
@@ -71,18 +70,14 @@ class Dashboard {
     // .where('role', isEqualTo: 'companyUser')
         .get();
     int usersInfoCount = usersCollection.size;
-    if (kDebugMode) {
-      print('followers $usersInfoCount');
-    }
+
     QuerySnapshot reqCollection = await db
         .collection('users')
         .doc(uid)
         .collection('Req')
         .get();
     int reqCollectionCount = reqCollection.size;
-    if (kDebugMode) {
-      print('Req $reqCollectionCount');
-    }
+
 
     Map<String, dynamic> dashboardDataUser = {
       'userFollowing': usersInfoCount.toString(),

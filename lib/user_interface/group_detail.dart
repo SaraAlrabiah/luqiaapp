@@ -6,9 +6,10 @@ import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
 
 import 'login.dart';
+import 'meeting_detail.dart';
 
 class GroupDetail extends StatefulWidget {
-  var groupID;
+
 
   var createdBy;
 
@@ -91,17 +92,11 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                               .collection("Meetings").where('groupID', isEqualTo: groupId)
                               .snapshots(),*/
                           FirebaseFirestore.instance
-                              .collection("Group").doc().collection('Meetings')
+                              /*.collection("Group").doc(groupId)*/.collection('Meetings').where('GroupId' , isEqualTo: groupId)
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
-
-
-
-                              // ignore: unused_local_variable
-
-                    //          var currentUser = FirebaseAuth.instance.currentUser;
 
                               final docs = snapshot.data!.docs;
                               return ListView.builder(
@@ -113,20 +108,57 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
 
                                   DocumentSnapshot document =
                                   snapshot.data!.docs[index];
-                                  if(uid == createdBy){
 
-                                    ElevatedButton(
-                                      child: const Icon(Icons.date_range_rounded),
-                                      onPressed: () {
-
-                                      },
-                                    );
-                                  }
                                     return ListTile(
-                                      leading: const Icon(Icons.date_range_rounded),
+                                      leading: const Icon(Icons.date_range),
 
                                       title: Text(document['MeetingTitle']),
-                                      subtitle: Text(document['MeetingDate']),
+                                      subtitle:Column(
+                                        children: [
+                                          Text(document['MeetingDescription']),
+
+                                          Row(
+                                            children: [
+                                              Text(document[
+                                              'MeetingDay']),
+
+                                              const Text(" / "),
+                                              Text(document['MeetingMonth']),
+                                              const Text("/ "),
+                                              Text(
+                                                  document['MeetingYear']
+                                              ),
+
+                                              const Text(" "),
+
+                                              Text(
+                                                  document['MeetingMin']
+                                              ),
+                                              const Text(":"),
+
+                                              Text(document['MeetingHours']),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.details),
+                                        tooltip: 'add this user',
+                                        onPressed: () async {
+                                          final meetingId = document['MeetingID'];
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MeetingDetail(
+                                                    meetingId: meetingId,
+                                                  ),
+                                            ),
+                                          );
+                                        },
+                                      ),
 
                                     );
 
@@ -135,7 +167,9 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
 
                               );
 
-                            } else {
+                            }
+
+                            else {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
@@ -145,6 +179,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
 
                         ),
                       ],
+
                     ),
                   ),
                   SingleChildScrollView(

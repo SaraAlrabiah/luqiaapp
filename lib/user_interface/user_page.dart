@@ -40,7 +40,6 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
           if (snapshot.hasData && snapshot.data != null) {
             var currentUser = FirebaseAuth.instance.currentUser;
             UserHelper.saveUser(currentUser);
-
             final uid = currentUser!.uid;
             Dashboard.userDashboard(uid);
             // var email = currentUser.email;
@@ -66,10 +65,21 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                     ]),
                 leading: IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Setting()),
-                    );
+
+                    /*AlertDialog(
+                      content:  const Text(
+                        'This dialog was opened by tapping on the polygon!\n'
+                            'Polygon ID is ',
+                      ),
+
+                   actions: <Widget>[
+                        FlatButton(
+                          onPressed: Navigator.of(context).pop,
+                          child: const Text('CLOSE'),
+                        ),
+                      ],
+                    );*/
+                   Navigator.push( context,MaterialPageRoute(builder: (context) =>  const Setting()), );
                   },
                   icon: const Icon(Icons.settings),
                 ),
@@ -501,11 +511,15 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                               icon: const Icon(Icons.date_range_rounded),
                                               tooltip: 'Create a meeting',
                                               onPressed: () async {
+                                                final groupId =
+                                                document['groupId'];
+                                                print('group $groupId');
+
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const MeetingCreation()
+                                                         MeetingCreation(groupId: groupId,)
                                                   ),
                                                 );
 
@@ -540,9 +554,6 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                             );
                                           },
                                         ),
-
-                                        // title: Text((document.data as Map<String, dynamic>)['email'] ),
-                                        // title: Text(document.data()! ['email']),
                                       );
                                     }
                                   });
