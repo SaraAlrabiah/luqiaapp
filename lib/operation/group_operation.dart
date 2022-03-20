@@ -19,10 +19,7 @@ class GroupOperation {
         .get();
     int groupCount = groupCollection.size;
     int groupNum = groupCount++;
-
     String groupNumber = groupNum.toString();
-   // DocumentReference reference = FirebaseFirestore.instance.collection("Group").doc();
-
     Map<String, dynamic> groupInfo = {
       'groupId':  groupNumber,
       'CreateById': currentUserId,

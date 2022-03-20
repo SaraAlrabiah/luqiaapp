@@ -1,13 +1,9 @@
-
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AdminTrack {
   static FirebaseFirestore db = FirebaseFirestore.instance;
- // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   // ignore: non_constant_identifier_names
   static usersTrack(String email, String Action, DateTime date) async {
@@ -19,9 +15,9 @@ class AdminTrack {
       Map<String, dynamic> userData = {
         'createdBy': email,
         'Action': Action,
-        'day' : day,
+        'day': day,
         'time': time,
-        'month' : month,
+        'month': month,
       };
       await db
           .collection("users")
@@ -40,7 +36,7 @@ class AuthHelper {
     final res =
         await db.signInWithEmailAndPassword(email: email, password: password);
     // await db.signInWithPhoneNumber(email);
-    AdminTrack.usersTrack(email, 'Login In' , DateTime.now());
+    AdminTrack.usersTrack(email, 'Login In', DateTime.now());
     final User? user = res.user;
 
     return user;
@@ -49,7 +45,7 @@ class AuthHelper {
   static passwordReset(
       {required String email, required String password}) async {
     final user = db.currentUser;
-    AdminTrack.usersTrack(email, 'Reset password account' , DateTime.now());
+    AdminTrack.usersTrack(email, 'Reset password account', DateTime.now());
     await db.sendPasswordResetEmail(email: email);
 
     // final User? user = res.user;
@@ -57,7 +53,6 @@ class AuthHelper {
   }
 
   static addName(String name, User user) async {
-    // ignore: equal_elements_in_set
     await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
   }
 
@@ -66,9 +61,9 @@ class AuthHelper {
     final res = await db.createUserWithEmailAndPassword(
         email: email, password: password);
 
-     //logOut();
+    //logOut();
     if (email != 'Admin@gmail.com') {
-      AdminTrack.usersTrack(email, 'Create an account' , DateTime.now());
+      AdminTrack.usersTrack(email, 'Create an account', DateTime.now());
     }
 
     final User? user = res.user;
@@ -79,7 +74,7 @@ class AuthHelper {
   static logOut() {
     final user = db.currentUser!.email;
 
-    AdminTrack.usersTrack(  user! , 'Login out', DateTime.now());
+    AdminTrack.usersTrack(user!, 'Login out', DateTime.now());
     return db.signOut();
   }
 }
@@ -123,12 +118,6 @@ class UserHelper {
     return _firebaseAuth.currentUser!;
   }
 
-
-
- 
-
-
-
   static followUser(String currentUserId, String visitedUserId,
       String currentEmail, String userEmail) async {
     final userRef = db
@@ -150,7 +139,6 @@ class UserHelper {
           .doc(visitedUserId)
           .collection('Req')
           .add(followDec);
-
     }
   }
 
@@ -161,8 +149,6 @@ class UserHelper {
         .collection('followingUser')
         .doc(followe)
         .delete();
-
-
   }
 
   static delete(String uid, String documentId) async {
@@ -183,9 +169,7 @@ class UserHelper {
         .collection('followingUser')
         .doc(userEmail)
         .delete();
-
   }
-
 
   static saveAdmin(
     User? user,
@@ -231,11 +215,14 @@ class UserHelper {
       "last_login_day": day,
       "created_at": user.metadata.creationTime!.millisecondsSinceEpoch,
       "role": "normalUser",
+      'CurrentLocationLat': '',
+      'CurrentLocationLng': '',
     };
     final userRef = db.collection("users").doc(user.uid);
     if ((await userRef.get()).exists) {
       await userRef.update({
-        "last_login": user.metadata.lastSignInTime!.millisecondsSinceEpoch,
+        'name': user.displayName,
+        "last_login": user.metadata.lastSignInTime?.millisecondsSinceEpoch,
         "last_login_month": month,
         "last_login_day": day,
       });
@@ -247,14 +234,13 @@ class UserHelper {
 
   static companyInfo(User user, String companyName, String companySpecification,
       String companyAddress) async {
-   await user.updateDisplayName(companyName);
-
+    print('herecomp');
     DateTime now = DateTime.now();
     String month = now.month.toString();
     String day = now.day.toString();
     Map<String, dynamic> userData = {
       'id': user.uid,
-      'companyName': companyName,
+      'name': companyName,
       'companyAddress': companyAddress,
       "companySpecification": companySpecification,
       "email": user.email,
@@ -264,41 +250,16 @@ class UserHelper {
       "created_at": user.metadata.creationTime!.millisecondsSinceEpoch,
       "role": "companyUser",
     };
-    final userRef = db.collection("users").doc(user.uid);
-    if ((await userRef.get()).exists) {
-      await userRef.update({
-        'companyName': companyName,
-        'companyAddress': companyAddress,
-        "companySpecification": companySpecification,
-        "last_login": user.metadata.lastSignInTime!.millisecondsSinceEpoch,
-        "last_login_month": month,
-        "last_login_day": day,
-      });
-    } else {
-      await db
-          .collection("users")
-          .doc(user.uid)
-      // .collection('userInfo')
-          .set(userData);
-    }
-
+    await db.collection("users").doc(user.uid).set(userData);
+    // }
+    await user.updateDisplayName(companyName);
   }
 
   static saveUserCompany(User? user) async {
-   // await user?.updateDisplayName('r2');
-
     DateTime now = DateTime.now();
     String month = now.month.toString();
     String day = now.day.toString();
-   /* Map<String, dynamic> userData = {
-      'id': user!.uid,
-      "email": user.email,
-      "last_login": user.metadata.lastSignInTime!.millisecondsSinceEpoch,
-      "last_login_month": month,
-      "last_login_day": day,
-      "created_at": user.metadata.creationTime!.millisecondsSinceEpoch,
-      "role": "companyUser",
-    };*/
+
     final userRef = db.collection("users").doc(user?.uid);
     if ((await userRef.get()).exists) {
       await userRef.update({
@@ -306,31 +267,9 @@ class UserHelper {
         "last_login_month": month,
         "last_login_day": day,
       });
-    }/* else {
-      await db
-          .collection("users")
-          .doc(user.uid)
-          // .collection('userInfo')
-          .set(userData);
-    }*/
-
-    // await _saveDevice(user);
-  }
-
-  /*static Future<QuerySnapshot> searchUsers(String name) {
-    Future<QuerySnapshot> users =
-    usersRef.where('name', isGreaterThanOrEqualTo: name).getDocuments();
-    return users;
-  }
-*/
-/*static Stream<QuerySnapshot> listofUser(User user) {
-    // ignore: prefer_typing_uninitialized_variables
-    var userList;
-    if ((user as Map<String, dynamic>)['role'] == 'companyUser') {
-      CollectionReference userList = users.doc(user.uid).collection("users");
     }
-    return userList.snapshots();
-  }*/
+  }
+
 /*
    static _saveDevice(User user) async {
     DeviceInfoPlugin devicePlugin = DeviceInfoPlugin();
@@ -378,5 +317,3 @@ class UserHelper {
     }
   }*/
 }
-
-

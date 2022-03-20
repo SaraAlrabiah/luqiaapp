@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:luqiaapp/operation/group_operation.dart';
 
 import '../main.dart';
@@ -53,18 +54,18 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
             // ignore: non_constant_identifier_names
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
-
-            var email = currentUser.email;
-
             return Scaffold(
               appBar: AppBar(
-                title: Text('welcome  $email  normal uaer'),
+                foregroundColor: Colors.white70,
+                shadowColor: Colors.black26,
+                backgroundColor: Colors.grey,
+                title: Text('Users'.tr),
                 leading: IconButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>  const MainScreen(
+                          builder: (_) =>   MainScreen(
                           ),
                         ));
                   },

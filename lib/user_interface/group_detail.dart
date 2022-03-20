@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
@@ -11,14 +10,13 @@ import 'meeting_detail.dart';
 class GroupDetail extends StatefulWidget {
 
 
-  var createdBy;
 
    GroupDetail({Key? key, this.groupId , this.createdBy }) : super(key: key);
    final  groupId ;
+   final createdBy;
 
 
    @override
-  // ignore: no_logic_in_create_state
   _GroupDetailState createState() => _GroupDetailState(groupId , createdBy);
 }
 
@@ -43,8 +41,6 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             UserHelper.saveAdmin(snapshot.data!);
-
-            // ignore: non_constant_identifier_names
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
             Dashboard.userDashboard(uid);
@@ -53,6 +49,9 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
             return  Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
+                foregroundColor: Colors.white70,
+                shadowColor: Colors.black26,
+                backgroundColor: Colors.grey,
                 title: const Text('Group Information'),
                 leading:  IconButton(
                   icon: const Icon(Icons.backspace_outlined),
@@ -79,7 +78,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                   ],
                 ),
               ),
-              body: //SingleChildScrollView( child:
+              body:
               TabBarView(
                 controller: _tabController,
                 children: <Widget>[

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/internacionalization.dart';
 import 'package:get/get.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:get_storage/get_storage.dart';
 import 'lang/ar_AR.dart';
 import 'lang/en_US.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class LocalizationService extends Translations {
   // Default locale

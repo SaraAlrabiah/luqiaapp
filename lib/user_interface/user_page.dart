@@ -7,8 +7,10 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
 import 'package:luqiaapp/operation/group_operation.dart';
+import 'package:luqiaapp/operation/location_operation.dart';
 import 'package:luqiaapp/user_interface/group_detail.dart';
 import 'package:luqiaapp/user_interface/setting.dart';
+import 'package:provider/provider.dart';
 import 'group_creation.dart';
 import 'group_info.dart';
 import 'login.dart';
@@ -30,10 +32,13 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 6, vsync: this);
+    Provider.of<LocationProvider>(context, listen: false).initialization();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -45,11 +50,11 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
             // var email = currentUser.email;
             var name = currentUser.displayName;
 
-            /*final CollectionReference followers = FirebaseFirestore.instance
-                .collection("user")
-                .doc('Req') as CollectionReference<Object?>;*/
             return Scaffold(
               appBar: AppBar(
+                foregroundColor: Colors.white70,
+                shadowColor: Colors.black26,
+                backgroundColor: Colors.grey,
                 title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -57,29 +62,13 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                         'Welcome'.tr,
                         style: const TextStyle(
                             color: Colors.black,
-                            //  fontWeight: ,
-                            // fontFamily: titleFontFamily,
                             fontSize: 25.0),
                       ),
                       Text('    $name'),
                     ]),
                 leading: IconButton(
                   onPressed: () {
-
-                    /*AlertDialog(
-                      content:  const Text(
-                        'This dialog was opened by tapping on the polygon!\n'
-                            'Polygon ID is ',
-                      ),
-
-                   actions: <Widget>[
-                        FlatButton(
-                          onPressed: Navigator.of(context).pop,
-                          child: const Text('CLOSE'),
-                        ),
-                      ],
-                    );*/
-                   Navigator.push( context,MaterialPageRoute(builder: (context) =>  const Setting()), );
+                   Navigator.push( context,MaterialPageRoute(builder: (context) =>    SettingPage(uid: uid,)), );
                   },
                   icon: const Icon(Icons.settings),
                 ),
@@ -146,10 +135,11 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                           currentUser
                                               .uid /*&& (users as Map<String, dynamic>)['email'] != document['email']*/) {
                                     return ListTile(
+                                      selectedColor: Colors.blue,
                                       title: Text(document['email']),
                                       subtitle: Text(document['role']),
                                       trailing: IconButton(
-                                        icon: const Icon(
+                                        icon:  const Icon(
                                           Icons.add,
                                         ),
                                         tooltip: 'add this user',
@@ -160,6 +150,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
                                           UserHelper.followUser(
                                               uid, userId, email!, userEmail);
+
                                           // UserHelper.followUsers( uid, userId, email, userEmail);
                                           //       UserHelper.doesNameAlreadyExist("normalUser", userId);
                                         },
@@ -175,16 +166,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                             }
                           },
                         ),
-                        // ignore: deprecated_member_use
-                        /* RaisedButton(
-                        child: const Text("Create Group"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => GroupUserPage(),
-                              ));
-                        })*/
+
                       ],
                     ),
                   ),
@@ -253,13 +235,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                             }
                           },
                         ),
-                        // ignore: deprecated_member_use
-                        RaisedButton(
-                          child: const Text("Log out"),
-                          onPressed: () {
-                            AuthHelper.logOut();
-                          },
-                        )
+
                       ],
                     ),
                   ),
@@ -326,13 +302,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                             }
                           },
                         ),
-                        // ignore: deprecated_member_use
-                        RaisedButton(
-                          child: const Text("Log out"),
-                          onPressed: () {
-                            AuthHelper.logOut();
-                          },
-                        )
+
                       ],
                     ),
                   ),
@@ -371,10 +341,11 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: 200,
-                                              height: 200,
+                                              width: size.width *0.4,
+                                              height: size.height * 0.2,
                                               child: Card(
                                                 child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     const Text(
                                                       'Following   ',
@@ -392,10 +363,12 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 200,
-                                              height: 200,
+                                              width: size.width *0.4,
+                                              height: size.height * 0.2,
                                               child: Card(
                                                 child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+
                                                   children: [
                                                     const Text(
                                                       'Req   ',

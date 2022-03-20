@@ -26,7 +26,6 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
   var groupId;
 
   _MeetingCreationState(this.groupId);
-  late TabController _tabController;
   TextEditingController _MeetingTitleController = TextEditingController(text: "");
   TextEditingController _MeetingDescriptionController =
   TextEditingController(text: "");
@@ -34,18 +33,12 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
 
 
 
- // TextEditingController _DateController = TextEditingController(text: "");
- // TextEditingController _LocationController = TextEditingController(text: "");
-
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 1, vsync: this);
     _MeetingTitleController = TextEditingController(text: "");
     _MeetingDescriptionController = TextEditingController(text: "");
-   // _DateController = TextEditingController(text: "");
-  //  _LocationController = TextEditingController(text: "");
+
 
   }
 
@@ -66,38 +59,28 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            //  UserHelper.saveUser(snapshot.data!);
           var currentUser = FirebaseAuth.instance.currentUser;
-           // var id = currentUser!.uid;
             var email = currentUser?.email;
             Size size = MediaQuery.of(context).size;
-            // final uid = currentUser.uid;
-            // Dashboard.userDashboard(uid);
-
             return Scaffold(
               appBar: AppBar(
+                foregroundColor: Colors.white70,
+                shadowColor: Colors.black26,
+                backgroundColor: Colors.grey,
                 title: const Text('Create Meeting '),
                 leading: IconButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pop(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>  const MainScreen(
+                          builder: (_) =>   MainScreen(
                           ),
                         ));
                   },
                   icon: const Icon(Icons.arrow_back),
                 ),
-                bottom: TabBar(
-                  controller: _tabController,
-                  tabs: const <Widget>[
-                    Tab(
-                      icon: Icon(Icons.cloud_outlined),
-                    ),
-                  ],
-                ),
               ),
-              body: TabBarView(controller: _tabController, children: <Widget>[
+              body:
                 Scaffold(
                   body: Form(
                     key: _form,
@@ -108,10 +91,6 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(height: size.height * 0.03),
-                         /* SvgPicture.asset(
-                            "assets/icons/login.svg",
-                            height: size.height * 0.35,
-                          ),*/
                           SizedBox(height: size.height * 0.03),
                           const SizedBox(height: 100.0),
                           const Text(
@@ -210,7 +189,8 @@ print('here');
                     ]),
                   ),
                 )
-              ]),
+            //   ]
+            // ),
             );
           } else {
             return LoginPage();
