@@ -51,10 +51,10 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
-                title: const Text('Group Information'),
+                backgroundColor: Colors.white,
+                title: const Text('Group Information' , style: TextStyle(color: Colors.black),),
                 leading:  IconButton(
-                  icon: const Icon(Icons.backspace_outlined),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded , color: Colors.black,),
                   tooltip: 'back',
                   onPressed: () {
                     Navigator.pop(
@@ -69,10 +69,10 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                   controller: _tabController,
                   tabs: const <Widget>[
                     Tab(
-                      icon: Icon(Icons.group),
+                      icon: Icon(Icons.group , color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.person , color: Colors.black,),
                     ),
 
                   ],

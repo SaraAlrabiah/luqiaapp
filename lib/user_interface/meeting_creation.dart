@@ -66,9 +66,12 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
-                title: const Text('Create Meeting '),
+                backgroundColor: Colors.white,
+                title: const Text('Create Meeting ',style: TextStyle(
+                    color: Colors.black,
+                ),),
                 leading: IconButton(
+                  color: Colors.black,
                   onPressed: () {
                     Navigator.pop(
                         context,
@@ -77,7 +80,7 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
                           ),
                         ));
                   },
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back, color: Colors.black,),
                 ),
               ),
               body:

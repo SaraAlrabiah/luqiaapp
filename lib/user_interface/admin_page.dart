@@ -43,7 +43,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.white,
                 title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -54,6 +54,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                       ),
                     ]),
                 leading: IconButton(
+                  color: Colors.black,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -63,10 +64,11 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                               )),
                     );
                   },
-                  icon: const Icon(Icons.settings),
+                  icon: const Icon(Icons.settings ,  color: Colors.black,),
                 ),
                 actions: <Widget>[
                   IconButton(
+                    color: Colors.black,
                     icon: const Icon(Icons.logout),
                     tooltip: 'Logout',
                     onPressed: () {

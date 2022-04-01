@@ -125,22 +125,24 @@ class LocationService {
     var userLocationLng= userData['CurrentLocationLng'];
     final String url = 'https://maps.googleapis.com/maps/api/directions/json?origin=$userLocationLat,$userLocationLng&destination=$meetingLocationLat,$meetingLocationLng&key=$key';
     var response = await http.get(Uri.parse(url));
-    var json = convert.jsonDecode(
-        response.body );
+    var json = convert.jsonDecode(response.body );
     var result ={
-     /* 'bounds_ne':json['routes'][0]['bounds']['northeast'] ,
-      'bounds_sw': json['routes'][0]['bounds']['southwest'] ,
-      'start_location' : json['routes'][0]['legs'][0]['start_location'] ,
-      'end_location' : json['routes'][0]['legs'][0]['end_location'] ,
-      'travel_mode': json['routes'][0]['legs'][0]['travel_mode'] ,
-      'polyline':json['routes'][0]['overview_polyline']['point']  ,*/
       'duration' : json['routes'][0]['legs'][0]['duration']['text'] ,
       'distance' : json['routes'][0]['legs'][0]['distance']['text'],
       'email' : currentUser?.email,
+      'Comment' : ''
     };
-    db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(userId).set(result);
-    print(result['distance']);
-    print(result['duration']);
+    final estimatedTime = db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(userId);
+    if ((await estimatedTime.get()).exists) {
+      await estimatedTime.update({
+        'duration': json['routes'][0]['legs'][0]['duration']['text'],
+        'distance': json['routes'][0]['legs'][0]['distance']['text'],
+      });
+    }
+    else {
+      db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(
+          userId).set(result);
+    }
     return result;
 
   }

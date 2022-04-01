@@ -47,10 +47,11 @@ class _MeetingDetailState extends State<MeetingDetail>
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
-                title: const Text('Meeting Information'),
+                backgroundColor: Colors.white,
+                title: const Text('Meeting Information' , style: TextStyle(color: Colors.black),),
                 leading: IconButton(
-                  icon: const Icon(Icons.backspace_outlined),
+                  color: Colors.black,
+                  icon: const Icon(Icons.arrow_back_ios_outlined),
                   tooltip: 'back',
                   onPressed: () {
                     Navigator.pop(

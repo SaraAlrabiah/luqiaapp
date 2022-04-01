@@ -97,14 +97,14 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
   @override
   void initState(){
     super.initState();
-
+    getCurrentLocation();
     _setMarker(
-        const LatLng(
-          //locationPosition!.latitude, locationPosition!.longitude
-            25.53548, 45.22072
+         LatLng(
+           // _currentPosition!.latitude, _currentPosition!.longitude
+          25.53548, 45.22072
         ));
 
-    getCurrentLocation();
+
 
   }
   Future<Position?> determinePosition() async {

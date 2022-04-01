@@ -54,7 +54,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.white,
                 title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -62,11 +62,14 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                         'Welcome'.tr,
                         style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 25.0),
+                            fontSize: 20.0),
                       ),
-                      Text('    $name'),
+                      Text('    $name', style:const TextStyle(
+                          color: Colors.black,
+                          fontSize: 25.0), ),
                     ]),
                 leading: IconButton(
+                  color: Colors.black,
                   onPressed: () {
                    Navigator.push( context,MaterialPageRoute(builder: (context) =>    SettingPage(uid: uid,)), );
                   },
@@ -74,6 +77,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                 ),
                 actions: <Widget>[
                   IconButton(
+                    color: Colors.black,
                     icon: const Icon(Icons.logout),
                     tooltip: 'Logout',
                     onPressed: () {
@@ -85,22 +89,22 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                   controller: _tabController,
                   tabs: const <Widget>[
                     Tab(
-                      icon: Icon(Icons.cloud_outlined),
+                      icon: Icon(Icons.cloud_outlined , color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.beach_access_sharp),
+                      icon: Icon(Icons.beach_access_sharp, color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.brightness_5_sharp),
+                      icon: Icon(Icons.brightness_5_sharp, color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.brightness_5_sharp),
+                      icon: Icon(Icons.brightness_5_sharp, color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.group),
+                      icon: Icon(Icons.meeting_room, color: Colors.black,),
                     ),
                     Tab(
-                      icon: Icon(Icons.group),
+                      icon: Icon(Icons.group, color: Colors.black,),
                     ),
                   ],
                 ),

@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
           )
         ],
     child: GetMaterialApp(
+
       title: 'Luqia'.tr,
       debugShowCheckedModeBanner: false,
       translations: LocalizationService(), // your translations

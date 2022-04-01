@@ -234,7 +234,6 @@ class UserHelper {
 
   static companyInfo(User user, String companyName, String companySpecification,
       String companyAddress) async {
-    print('herecomp');
     DateTime now = DateTime.now();
     String month = now.month.toString();
     String day = now.day.toString();

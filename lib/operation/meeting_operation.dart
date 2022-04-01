@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luqiaapp/operation/location_operation.dart';
 
@@ -145,4 +147,16 @@ class MeetingOperation {
 
 
   }
+  static addComment(String meetingId , String comment) async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    final uid = currentUser!.uid;
+    final userRef = db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(uid);
+    if ((await userRef.get()).exists) {
+      await userRef.update({
+        "Comment": comment
+
+      });
+    }
+  }
+
 }

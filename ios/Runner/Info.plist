@@ -2,14 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>NSLocationAlwaysUsageDescription</key>
-	<string>I need it </string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Because</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Luqiaapp</string>
+	<string>Luqia</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,9 +13,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>luqiaapp</string>
+	<string>luqia</string>
 	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>APPLE</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    <string>NSSpeechRecognitionUsageDescription</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>NSSpeechRecognitionUsageDescription</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
@@ -28,6 +28,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>I need it </string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Because</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

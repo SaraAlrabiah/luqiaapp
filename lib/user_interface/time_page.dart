@@ -50,6 +50,9 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
     // print(groupId);
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white70,
+        shadowColor: Colors.black26,
+        backgroundColor: Colors.white,
         title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -60,7 +63,7 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
             ]),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add , color: Colors.black,),
             tooltip: 'Add',
             onPressed: () {
               print(meetingDescreiption);

@@ -63,7 +63,7 @@ class _GroupUserPageState extends State<GroupUserPage>
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.white,
                 title: const Text('Create Group'),
                 leading: IconButton(
                   onPressed: () {

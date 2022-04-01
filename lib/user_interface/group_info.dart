@@ -58,9 +58,10 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
-                title: Text('Users'.tr),
+                backgroundColor: Colors.white,
+                title: Text('Users'.tr ,style: TextStyle(color: Colors.black),),
                 leading: IconButton(
+                  color: Colors.black,
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -75,7 +76,7 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
                   controller: _tabController,
                   tabs: const <Widget>[
                     Tab(
-                      icon: Icon(Icons.cloud_outlined),
+                      icon: Icon(Icons.cloud_outlined ),
                     ),
 
                   ],

@@ -64,7 +64,7 @@ class _SettingPageState extends State<SettingPage>
               appBar: AppBar(
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.white,
                 title: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -86,11 +86,13 @@ class _SettingPageState extends State<SettingPage>
                           builder: (context) => const MainScreen()),
                     );
                   },
-                  icon: const Icon(Icons.backspace_outlined),
+                  icon: const Icon(Icons.arrow_back_ios , color: Colors.black,),
                 ),
                 actions: <Widget>[
                   IconButton(
-                    icon: const Icon(Icons.logout),
+
+                    icon: const Icon(Icons.logout , color: Colors.black,) ,
+
                     tooltip: 'Logout',
                     onPressed: () {
                       AuthHelper.logOut();
