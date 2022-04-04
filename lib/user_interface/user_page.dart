@@ -15,6 +15,7 @@ import 'group_creation.dart';
 import 'group_info.dart';
 import 'login.dart';
 import 'meeting_creation.dart';
+import 'package:luqiaapp/style/button.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key, required uid}) : super(key: key);
@@ -110,6 +111,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                 ),
               ),
               body: TabBarView(
+
                 controller: _tabController,
                 children: <Widget>[
                   SingleChildScrollView(
@@ -155,8 +157,6 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                           UserHelper.followUser(
                                               uid, userId, email!, userEmail);
 
-                                          // UserHelper.followUsers( uid, userId, email, userEmail);
-                                          //       UserHelper.doesNameAlreadyExist("normalUser", userId);
                                         },
                                       ),
                                     );
@@ -407,7 +407,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                   ),
                   SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         StreamBuilder(
                           stream: FirebaseFirestore.instance
@@ -541,16 +541,14 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                             }
                           },
                         ),
-                        // ignore: deprecated_member_use
-                        RaisedButton(
-                            child: const Text("Create Group"),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const GroupUserPage(),
-                                  ));
-                            })
+                        Button(onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const GroupUserPage(),
+                              ));
+                        }, text: 'Create Group')
+
                       ],
                     ),
                   ),

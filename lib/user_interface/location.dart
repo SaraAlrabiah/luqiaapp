@@ -38,6 +38,7 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
   List<LatLng> polygonLatLng = <LatLng>[];
   int polygon = 1;
   var newPoint ;
+
   Position? _currentPosition;
   String? _currentAddress;
   Future<void> _goToPlace(Map<String , dynamic> place) async {
@@ -98,10 +99,11 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
   void initState(){
     super.initState();
     getCurrentLocation();
+print(_currentPosition);
     _setMarker(
          LatLng(
-           // _currentPosition!.latitude, _currentPosition!.longitude
-          25.53548, 45.22072
+
+             25.544638870251752, 45.22577494382858
         ));
 
 
@@ -127,8 +129,7 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
         .then((Position position) {
       setState(() {
         _currentPosition = position;
-        print(position.latitude);
-        print(position.longitude);
+
 
       });
     }).catchError((e) {
@@ -150,14 +151,16 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
 
     return  Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white70,
+        shadowColor: Colors.black26,
+        backgroundColor: Colors.white,
         title: const Text('Location SetUp'),
         leading: IconButton(
           onPressed: () {
 
             Navigator.pop(
               context,
-              // MaterialPageRoute(
-              //     builder: (context) => const MainScreen()),
+
             );
 
 

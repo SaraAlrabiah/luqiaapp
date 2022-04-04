@@ -29,7 +29,6 @@ class LocationProvider with ChangeNotifier {
   }
 
   initialization() async {
-    print('here3');
     await getUserLocation();
     await setCustomMapPin();
   }
@@ -37,7 +36,7 @@ class LocationProvider with ChangeNotifier {
 getUserLocation() async {
     bool _serviceEnable;
     PermissionStatus _permissionGranted;
-    print('here4');
+
 
 
     _serviceEnable = await location!.serviceEnabled();

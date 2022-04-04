@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:luqiaapp/main.dart';
 import 'package:luqiaapp/user_interface/time_page.dart';
 import 'login.dart';
+import 'package:luqiaapp/style/button.dart';
 
 class MeetingCreation extends StatefulWidget {
 
@@ -125,68 +126,29 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
                               return null;
                             },
                           ),
-                         /* Row(
+                          const SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
+                          Button(onPressed: () async {
+                            _saveForm();
+                            if (_MeetingDescriptionController.text.isEmpty ||
+                                _MeetingTitleController.text.isEmpty) {
+                              return;
+                            }
 
-                           children:  [
-                            IconButton(
+                            try {
 
-                              icon: const Icon(Icons.date_range_rounded),
-                              onPressed: () {
-                                Navigator.push(
+                              Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const TimePaker ()),
-                                );
-                              },
-                            ),
-                             const Text('Meeting Date', style: TextStyle(
-                                 fontWeight: FontWeight.bold, fontSize: 20.0),),
-                               Text(dateTime.toString(), style: const TextStyle(
-                                 fontWeight: FontWeight.bold, fontSize: 20.0),),
-                           ],
-                          ), Row(
+                                  MaterialPageRoute(
+                                    builder: (_) =>     DatetimePickerWidget(meetingTitle: _MeetingTitleController.text , meetingDescreiption: _MeetingDescriptionController.text, groupId: groupId, email: email,  ),
+                                  ));
+                            } catch (e) {
+                              if (kDebugMode) {
+                                print(e);
+                              }
+                            }
+                          }, text: 'Add')
 
-                            children:  [
-                              IconButton(
-
-                                icon: const Icon(Icons.location_on_outlined),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const Setting()),
-                                  );
-                                },
-                              ),
-                              const Text('Meeting Location', style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0),),
-
-
-                            ],
-                          ),*/
-                          const SizedBox(height: 10.0),
-                          const SizedBox(height: 10.0),
-                          ElevatedButton(
-                              child: const Text("Add"),
-                              onPressed: () async {
-                                _saveForm();
-                                if (_MeetingDescriptionController.text.isEmpty ||
-                                    _MeetingTitleController.text.isEmpty) {
-                                  return;
-                                }
-
-                                try {
-print('here');
-                                //var meetingId =   MeetingOperation.  createNewMeeting(_GroupActivityController.text,_GroupNameController.text , groupId , email! );
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>     DatetimePickerWidget(meetingTitle: _MeetingTitleController.text , meetingDescreiption: _MeetingDescriptionController.text, groupId: groupId, email: email,  ),
-                                      ));
-                                } catch (e) {
-                                  if (kDebugMode) {
-                                    print(e);
-                                  }
-                                }
-                              }),
                         ],
                       ),
                     ]),

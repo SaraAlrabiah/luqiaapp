@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:luqiaapp/main.dart';
 import 'package:luqiaapp/operation/group_operation.dart';
 import 'login.dart';
+import 'package:luqiaapp/style/button.dart';
+
 
 class GroupUserPage extends StatefulWidget {
   const GroupUserPage({Key? key}) : super(key: key);
@@ -89,7 +91,7 @@ class _GroupUserPageState extends State<GroupUserPage>
                         children: <Widget>[
                           SizedBox(height: size.height * 0.10),
                           SizedBox(
-                            height: size.height * 0.5,
+                            height: size.height * 0.70,
                             width: size.width * 0.90,
                             child: Card(
 
@@ -119,38 +121,36 @@ class _GroupUserPageState extends State<GroupUserPage>
                                     },
                                   ),
                                   SizedBox(height: size.height * 0.15),
-                                  ElevatedButton(
-                                      child: const Text("Add"),
-                                      onPressed: () async {
-                                        _saveForm();
-                                        if (_GroupActivityController.text.isEmpty ||
-                                            _GroupNameController.text.isEmpty) {
-                                          return;
-                                        }
+                                  Button(onPressed: () async {
+                                    _saveForm();
+                                    if (_GroupActivityController.text.isEmpty ||
+                                        _GroupNameController.text.isEmpty) {
+                                      return;
+                                    }
 
-                                        try {
-                                          GroupOperation.createNewGroup(
-                                              id,
-                                              _GroupNameController.text,
-                                              _GroupActivityController.text,
-                                              email!);
+                                    try {
+                                      GroupOperation.createNewGroup(
+                                          id,
+                                          _GroupNameController.text,
+                                          _GroupActivityController.text,
+                                          email!);
 
 
-                                          if (kDebugMode) {
-                                            print("added successful");
-                                          }
-                                          //       Navigator.pop( context );
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) =>  MainScreen(),
-                                              ));
-                                        } catch (e) {
-                                          if (kDebugMode) {
-                                            print(e);
-                                          }
-                                        }
-                                      }),
+                                      if (kDebugMode) {
+                                        print("added successful");
+                                      }
+                                      //       Navigator.pop( context );
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>  MainScreen(),
+                                          ));
+                                    } catch (e) {
+                                      if (kDebugMode) {
+                                        print(e);
+                                      }
+                                    }
+                                  }, text: 'Add')
                                 ],
                               ),
                             ),

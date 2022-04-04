@@ -95,7 +95,7 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                   style: TextStyle(color: Colors.black),
                 ),
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_sharp,
+                  icon: const Icon(Icons.arrow_back_ios_outlined,
                       color: Colors.black),
                   tooltip: 'back',
                   onPressed: () {

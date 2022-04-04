@@ -87,11 +87,8 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         StreamBuilder(
-                          stream: /*FirebaseFirestore.instance
-                              .collection("Meetings").where('groupID', isEqualTo: groupId)
-                              .snapshots(),*/
-                          FirebaseFirestore.instance
-                              /*.collection("Group").doc(groupId)*/.collection('Meetings').where('GroupId' , isEqualTo: groupId)
+                          stream:
+                          FirebaseFirestore.instance.collection('Meetings').where('GroupId' , isEqualTo: groupId)
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -188,17 +185,11 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                         StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection("Group").doc(groupId) .collection("GroupMember")
-                             // .doc('Group').collection(groupId)
-                          //.where('groupID', isEqualTo: groupId)
+
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
-
-                              // ignore: unused_local_variable
-
-                         //     var currentUser = FirebaseAuth.instance.currentUser;
-                             // var email = currentUser!.email;
                               final docs = snapshot.data!.docs;
                               return ListView.builder(
                                 shrinkWrap: true,
@@ -208,10 +199,6 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
 
                                   DocumentSnapshot document =
                                   snapshot.data!.docs[index];
-                                 // final users = docs[index].data();
-                                //  final userDoc = snapshot.data;
-                                 // final userInfo = userDoc;
-                                  // ignore: prefer_const_constructors
 
                                   return ListTile(
 
@@ -219,7 +206,6 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                                       leading: const Icon(Icons.group),
 
                                     title: Text(document['email']),
-                                    subtitle: Text(document['id']),
 
                                   );
 
