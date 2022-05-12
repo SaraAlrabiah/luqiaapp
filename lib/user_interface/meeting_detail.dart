@@ -8,20 +8,22 @@ import 'current_meeting_detail.dart';
 import 'login.dart';
 
 class MeetingDetail extends StatefulWidget {
-  MeetingDetail({Key? key, this.meetingId}) : super(key: key);
+  MeetingDetail({Key? key, this.meetingId , this.groupId}) : super(key: key);
   final meetingId;
+  final groupId;
 
   @override
   // ignore: no_logic_in_create_state
-  _MeetingDetailState createState() => _MeetingDetailState(meetingId);
+  _MeetingDetailState createState() => _MeetingDetailState(meetingId , groupId);
 }
 
 class _MeetingDetailState extends State<MeetingDetail>
     with TickerProviderStateMixin {
   var meetingId;
+  var groupId;
   // late TabController _tabController;
 
-  _MeetingDetailState(this.meetingId);
+  _MeetingDetailState(this.meetingId, this.groupId);
 
   @override
   void initState() {
@@ -39,7 +41,8 @@ class _MeetingDetailState extends State<MeetingDetail>
             // ignore: non_constant_identifier_names
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
-            Dashboard.userDashboard(uid);
+            final userEmail = currentUser.email;
+            Dashboard.userDashboard(uid,userEmail! );
 
             // var email = currentUser.email;
             return Scaffold(
@@ -65,7 +68,7 @@ class _MeetingDetailState extends State<MeetingDetail>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance
+                      stream: FirebaseFirestore.instance.collection('Group').doc(groupId)
                           .collection('Meetings')
                           .where('MeetingID', isEqualTo: meetingId)
                           .snapshots(),
@@ -83,7 +86,7 @@ class _MeetingDetailState extends State<MeetingDetail>
 
                                 DateTime dateTime =
                                     document['MeetingDate'].toDate();
-                                MeetingOperation.comingBy(meetingId, dateTime);
+                                MeetingOperation.comingBy(meetingId, dateTime , groupId);
                                 if (document['ComingByMin'] != 'Done') {
                                   return ListTile(
                                     leading: const Icon(Icons.date_range),
@@ -128,6 +131,28 @@ class _MeetingDetailState extends State<MeetingDetail>
                                             const Text(" min "),
                                           ],
                                         ),
+                                        Row(
+
+                                          children: [
+
+                                            IconButton(
+                                                padding: EdgeInsets.only(left: 30),
+                                                onPressed: null, icon: Icon( Icons.location_on_rounded) ),
+
+
+                                            Text('(', style: TextStyle(fontSize: 7,  ),),
+                                            Text(document['MeetingLocationLat']
+                                                .toString(), style: TextStyle(fontSize: 7),),
+                                            const Text(","),
+                                            Text(document['MeetingLocationLng']
+                                                .toString() ,style: TextStyle(fontSize: 7),),
+                                            Text(')', style: TextStyle(fontSize: 7),),
+
+
+
+                                          ],
+                                        ),
+
                                       ],
                                     ),
                                     trailing: IconButton(
@@ -143,6 +168,8 @@ class _MeetingDetailState extends State<MeetingDetail>
                                               builder: (context) =>
                                                   CurrentMeetingDetail(
                                                 meetingId: meetingId,
+                                                    groupId : groupId
+
                                               ),
                                             ),
                                           );
@@ -155,6 +182,8 @@ class _MeetingDetailState extends State<MeetingDetail>
                                     leading: const Icon(Icons.date_range),
                                     title: Text(document['MeetingTitle']),
                                     subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(document['MeetingDescription']),
                                         Row(
@@ -176,8 +205,34 @@ class _MeetingDetailState extends State<MeetingDetail>
                                                 .toString()),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                         Row(
+
+                                               children: [
+
+                                                    IconButton(
+                                                      padding: EdgeInsets.only(left: 30),
+                                                        onPressed: null, icon: Icon( Icons.location_on_rounded) ),
+
+
+                                                          Text('(', style: TextStyle(fontSize: 7,  ),),
+                                                          Text(document['MeetingLocationLat']
+                                                              .toString(), style: TextStyle(fontSize: 7),),
+                                                          const Text(","),
+                                                          Text(document['MeetingLocationLng']
+                                                              .toString() ,style: TextStyle(fontSize: 7),),
+                                                          Text(')', style: TextStyle(fontSize: 7),),
+
+
+
+                                              ],
+                                            ),
+
+]
+                                  ),
+
+
+
+
                                     trailing: IconButton(
                                       icon: const Icon(Icons.details),
                                       // tooltip: 'add this user',
@@ -198,6 +253,7 @@ class _MeetingDetailState extends State<MeetingDetail>
                                         }
                                       },
                                     ),
+
                                   );
                                 }
                               });

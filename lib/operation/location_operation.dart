@@ -62,7 +62,7 @@ getUserLocation() async {
       _locationPosition =
           LatLng(currentLocation.latitude!, currentLocation.longitude!);
 
-      print('start');
+      print('CurrentLocation');
       var currentUser = FirebaseAuth.instance.currentUser;
       final userRef = db.collection("users").doc(currentUser?.uid);
       if(currentUser?.uid != null){
@@ -74,12 +74,11 @@ getUserLocation() async {
           } );
     }
     }
-
+print(_locationPosition);
       _marker = <MarkerId, Marker>{};
       Marker marker = Marker(
         markerId: markerId,
         position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-        //icon: (pinLocationIcon)!,
         draggable: true,
         onDragEnd: ((newPosition)  {
           _locationPosition =
@@ -105,19 +104,17 @@ getUserLocation() async {
 class LocationService {
   static const String key = 'AIzaSyAOD1C-k5VpLbQ7fDH3-OVDaFGgh3BzUkc';
   static FirebaseFirestore db = FirebaseFirestore.instance;
-  static estimatedTime (String meetingId , String userId ) async {
-    final meetingRef = db.collection("Meetings");
+  static estimatedTime (String meetingId , String userId , String groupId ) async {
+    final meetingRef = db.collection("Group").doc(groupId).collection("Meetings");
     var currentUser = FirebaseAuth.instance.currentUser;
     final userRef = db.collection("users");
     DocumentSnapshot snapshot = await meetingRef.doc(meetingId).get();
     DocumentSnapshot userSnapshot = await userRef.doc(userId).get();
-   var groupId;
+
     var meetingData = snapshot.data() as Map;
     var userData = userSnapshot.data() as Map;
-    groupId = meetingData['GroupId'];
-    print('group Id $groupId');
-    var meetingTime = meetingData['MeetingDate'];
-    print('meeting Time $meetingTime');
+
+    // var meetingTime = meetingData['MeetingDate'];
     var meetingLocationLat = meetingData['MeetingLocationLat'];
     var meetingLocationLng = meetingData['MeetingLocationLng'];
     var userLocationLat = userData['CurrentLocationLat'];
@@ -131,7 +128,7 @@ class LocationService {
       'email' : currentUser?.email,
       'Comment' : ''
     };
-    final estimatedTime = db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(userId);
+    final estimatedTime = db.collection("Group").doc(groupId).collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(userId);
     if ((await estimatedTime.get()).exists) {
       await estimatedTime.update({
         'duration': json['routes'][0]['legs'][0]['duration']['text'],
@@ -139,12 +136,12 @@ class LocationService {
       });
     }
     else {
-      db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(
-          userId).set(result);
+     db.collection("Group").doc(groupId).collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(userId).
+      set(result);
     }
     return result;
-
   }
+
 
   Future<String> getPlaceId(String search) async {
     var baseUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';

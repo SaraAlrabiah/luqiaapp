@@ -6,6 +6,93 @@ import 'package:luqiaapp/operation/location_operation.dart';
 
 class MeetingOperation {
   static FirebaseFirestore db = FirebaseFirestore.instance;
+  static comingBy1( DateTime dateTime  ) async {
+    // FirebaseFirestore.instance
+    //     .collection('Group')
+    //     .doc()
+    //     .collection('Meetings')
+    //     .get()
+    //     .then((QuerySnapshot querySnapshot) {
+    //   querySnapshot.docs.forEach((doc) {
+    //     if (comingBy > 31) {
+    //
+    //
+    //     }
+    //   });
+    // });
+    DateTime now = DateTime.now();
+
+    final userRef = db.collection('Group').doc().collection("Meetings").doc();
+    final comingByDys = dateTime.difference(now).inDays;
+    final comingByHours = dateTime.difference(now).inHours;
+    final comingByMin = dateTime.difference(now).inMinutes.toInt();
+
+    final result = await db.collection("Group").doc().collection('Meetings').get();
+
+    for (int i = 0; i < result.docs.length; i++) {
+      final x =
+      db.collection('Group').doc('$i').collection('Meetings').doc('$i');
+      if ((await x.get()).exists) {
+        if(comingByDys < 1 ){
+
+          if ( comingByMin > -1) {
+
+            if ((await userRef.get(
+            )).exists) {
+              await userRef.update(
+                  {
+                    "ComingByDay": 'Today',
+                    "ComingByHours": comingByHours.toString(
+                    ),
+                    "ComingByMin": comingByMin,
+                  } );
+            }
+          }
+          else if (comingByMin < 0 && comingByMin > -30) {
+
+            if ((await userRef.get(
+            )).exists) {
+              await userRef.update(
+                  {
+                    "ComingByDay": 'Now',
+                    "ComingByHours": 'Now',
+                    "ComingByMin": comingByMin,
+                  } );
+            }
+          }
+          else if (comingByMin < -45) {
+
+            if ((await userRef.get(
+            )).exists) {
+              await userRef.update(
+                  {
+                    "ComingByDay": 'Done',
+                    "ComingByHours": 'Done',
+                    "ComingByMin": 'Done',
+                  } );
+            }
+          }
+
+        }
+
+        else{
+
+          if ((await userRef.get()).exists) {
+            await userRef.update(
+                {
+                  "ComingByDay": comingByDys.toString(
+                  ),
+                  "ComingByHours": comingByHours.toString(
+                  ),
+                  "ComingByMin": comingByMin,
+                } );
+          }
+        }
+      }
+    }
+
+
+  }
 
 
   static addMeetingTime(
@@ -15,21 +102,17 @@ class MeetingOperation {
       DateTime meetingTime,
       String email,
       LatLng locationPoint) async {
-    QuerySnapshot meetingCollection = await db.collection('Meetings').get();
-
-    //Timestamp meetingDate = Timestamp.fromDate(meetingTime);
+    QuerySnapshot meetingCollection = await db.collection('Group').doc(groupId).collection('Meetings').get();
     int meetingCount = meetingCollection.size;
     int meetingNum = meetingCount++;
     String meetingNumber = meetingNum.toString();
-    print('group $groupId');
-    print('meeting $meetingNum');
+
 
     DateTime now = DateTime.now();
 
     final comingByDys = meetingTime.difference(now).inDays;
     final comingByHours = meetingTime.difference(now).inHours;
     final comingByMin = meetingTime.difference(now).inMinutes;
-    //  final meeting = db/*.collection("Group").doc(groupId)*/.collection('Meetings').doc(meetingNumber);
     Map<String, dynamic> meetingInfo = {
       'GroupId': groupId,
       'MeetingID': meetingNumber,
@@ -48,16 +131,17 @@ class MeetingOperation {
       "ComingByHours": comingByHours.toString(),
       "ComingByMin": comingByMin,
     };
-    db.collection('Meetings').doc(meetingNumber).set(meetingInfo);
+    db.collection('Group').doc(groupId).collection('Meetings').doc(meetingNumber).set(meetingInfo);
   }
 
-  static comingBy(String meetingId, DateTime dateTime) async {
+  static comingBy(String meetingId, DateTime dateTime , String groupId ) async {
     DateTime now = DateTime.now();
 
-    final userRef = db.collection("Meetings").doc(meetingId);
+    final userRef = db.collection('Group').doc(groupId).collection("Meetings").doc(meetingId);
     final comingByDys = dateTime.difference(now).inDays;
     final comingByHours = dateTime.difference(now).inHours;
     final comingByMin = dateTime.difference(now).inMinutes.toInt();
+
     if(comingByDys < 1 ){
 
     if ( comingByMin > -1) {
@@ -113,24 +197,15 @@ class MeetingOperation {
             } );
       }
     }
-//  if(comingByMin <= -45 && comingByMin > -100){
-//   if ((await userRef.get()).exists) {
-//     await userRef.update(
-//         {
-//           "ComingByDay": 'Done',
-//           "ComingByHours":'Done',
-//           "ComingByMin": 'Done',
-//         } );
-//   }
-// }
+
   }
 
-  static estimatedTime(String meetingId) async {
-    final meetingRef = db.collection("Meetings");
+  static estimatedTime(String meetingId, String groupId) async {
+    final meetingRef = db.collection('Group').doc(groupId).collection("Meetings");
     DocumentSnapshot snapshot = await meetingRef.doc(meetingId).get();
     var meetingData = snapshot.data() as Map;
-    var groupId = meetingData['GroupId'];
-    var commingBy = meetingData['ComingByMin'];
+
+    var comingBy = meetingData['ComingByMin'];
     FirebaseFirestore.instance
         .collection('Group')
         .doc(groupId)
@@ -138,19 +213,19 @@ class MeetingOperation {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        if (commingBy <= 31) {
-          LocationService.estimatedTime(meetingId, doc["id"]);
-          print(doc["id"]);
+        if (comingBy <= 31) {
+          LocationService.estimatedTime(meetingId, doc["id"] ,groupId);
+
         }
       });
     });
 
 
   }
-  static addComment(String meetingId , String comment) async {
+  static addComment(String meetingId , String comment , String groupId) async {
     var currentUser = FirebaseAuth.instance.currentUser;
     final uid = currentUser!.uid;
-    final userRef = db.collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(uid);
+    final userRef = db.collection('Group').doc(groupId).collection("Meetings").doc(meetingId).collection('EstimatedTime').doc(uid);
     if ((await userRef.get()).exists) {
       await userRef.update({
         "Comment": comment

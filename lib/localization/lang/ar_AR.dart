@@ -15,7 +15,7 @@ const Map<String, String> arAE = {
   '3 month' : ' ٣ اشهر',
   'Users' : 'المضافين',
       "Sign Up" : '',
-  "Enter email Company" : "Enter email Company",
+  "Enter email Company" : "",
   "Enter a valid email address!" : '',
   "Enter password" : '',
   'Confirm password' : '',

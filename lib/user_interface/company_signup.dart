@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
+import 'package:luqiaapp/style/button.dart';
 import 'package:luqiaapp/user_interface/user_page.dart';
 import 'login.dart';
 
@@ -81,11 +82,11 @@ class _CompanySignupPage extends State<CompanySignupPage> {
                               TextFormField(
                                 controller: _emailController,
                                 decoration:  InputDecoration(
-                                    hintText: "Enter email Company".tr),
+                                    hintText: "Enter email Company"),
                                 validator: (text) {
                                   if (!(text!.contains('@')) &&
                                       text.isNotEmpty) {
-                                    return "Enter a valid email address!".tr;
+                                    return "Enter a valid email address!";
                                   }
                                   return null;
                                 },
@@ -95,14 +96,14 @@ class _CompanySignupPage extends State<CompanySignupPage> {
                                 controller: _passwordController,
                                 obscureText: true,
                                 decoration:  InputDecoration(
-                                    hintText: "Enter password".tr),
+                                    hintText: "Enter password"),
                               ),
 
                               TextField(
                                 controller: _confirmPasswordController,
                                 obscureText: true,
                                 decoration:  InputDecoration(
-                                    hintText: "Confirm password".tr),
+                                    hintText: "Confirm password"),
                               ),
                         ],
                           ),
@@ -143,55 +144,51 @@ class _CompanySignupPage extends State<CompanySignupPage> {
                                 decoration: const InputDecoration(
                                     hintText: "company Address"),
                               ),
+SizedBox(height: size.height*0.1,),
+Button(onPressed: () async {
+  if (_emailController.text.isEmpty ||
+      _passwordController.text.isEmpty) {
+    print("Email and password cannot be empty");
+    return;
+  }
+  if (_confirmPasswordController.text.isEmpty ||
+      _passwordController.text !=
+          _confirmPasswordController.text) {
+    // ignore: avoid_print
+    print("confirm password does not match");
+    return;
+  }
+  try {
+    final user = await AuthHelper.signupWithEmail(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (user != null) {
+      AuthHelper.addName( _companyNameController.text, user);
+      UserHelper.companyInfo(
+          user, _companyNameController.text, _companySpecificationController.text, _companyAddressController.text);
 
-                              ElevatedButton(
-                                child: const Text("Sign up"),
-                                onPressed: () async {
-                                  if (_emailController.text.isEmpty ||
-                                      _passwordController.text.isEmpty) {
-                                    print("Email and password cannot be empty");
-                                    return;
-                                  }
-                                  if (_confirmPasswordController.text.isEmpty ||
-                                      _passwordController.text !=
-                                          _confirmPasswordController.text) {
-                                    // ignore: avoid_print
-                                    print("confirm password does not match");
-                                    return;
-                                  }
-                                  try {
-                                    final user = await AuthHelper.signupWithEmail(
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                    );
-                                    if (user != null) {
-                                      AuthHelper.addName( _companyNameController.text, user);
-                                      UserHelper.companyInfo(
-                                          user, _companyNameController.text, _companySpecificationController.text, _companyAddressController.text);
+      print("signup successful");
 
-                                      print("signup successful");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>  LoginPage(),
+          ));
+    }
+  } catch (e) {
+    print(e);
+  }
+}, text: "Sign up"),
 
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>  LoginPage(),
-                                          ));
-                                    }
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
-                              ),
-                              // ignore: deprecated_member_use
-                              ElevatedButton(
-                                  child: const Text("Login in"),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => LoginPage(),
-                                        ));
-                                  }),
+                              Button(onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => LoginPage(),
+                                    ));
+                              }, text: "Login")
+
                             ],
                           ),
                         ),

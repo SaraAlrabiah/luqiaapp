@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:luqiaapp/localization/localization_services.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
+import 'package:luqiaapp/user_interface/req.dart';
 import 'package:pay/pay.dart';
 
 import 'package:flutter_braintree/flutter_braintree.dart';
 
 import '../main.dart';
 import '../operation/dashboard.dart';
+import '../style/button.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key, required uid}) : super(key: key);
@@ -27,10 +29,7 @@ class _SettingPageState extends State<SettingPage>
   bool _1monthS = true;
   bool _1yearG = true;
   bool _1yearS = true;
-  bool _3month = true;
-  bool _6month = true;
-  bool _1year = true;
-  bool _5year = true;
+
   final _paymentItems = <PaymentItem>[];
   @override
   void initState() {
@@ -47,8 +46,10 @@ class _SettingPageState extends State<SettingPage>
             var currentUser = FirebaseAuth.instance.currentUser;
             UserHelper.saveUser(currentUser);
             final uid = currentUser!.uid;
-            Dashboard.userDashboard(uid);
+
             var email = currentUser.email;
+            Dashboard.userDashboard(uid,email! );
+
             var name = currentUser.displayName;
 
             void onGooglePayResult(paymentResult) {
@@ -102,10 +103,22 @@ class _SettingPageState extends State<SettingPage>
               ),
               body: SingleChildScrollView(
                 child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+
+
                   children: [
-                    Card(
-                      child: _uiWidget(name, email!),
+
+                    SizedBox(
+                      //height: size.height *2,
+                      width: size.width * 95,
+                      child: Card(
+                        child: _uiWidget(name, email),
+                      ),
                     ),
+
+
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -138,542 +151,640 @@ class _SettingPageState extends State<SettingPage>
                                         print(size.width);
                                         return SizedBox(
                                           width: size.width * 0.99,
-                                          height: size.height * 0.25,
-                                          child: Card(
-                                            color: Colors.blueGrey,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _3month
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _3month = !_3month;
-                                                            if (_6month ==
-                                                                    false ||
-                                                                _1year ==
-                                                                    false ||
-                                                                _5year ==
-                                                                    false) {
-                                                              _6month = true;
-                                                              _1year = true;
-                                                              _5year = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '10',
-                                                                    label:
-                                                                        'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('3 month'.tr)),
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _6month
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _6month = !_6month;
-                                                            if (_3month ==
-                                                                    false ||
-                                                                _1year ==
-                                                                    false ||
-                                                                _5year ==
-                                                                    false) {
-                                                              _3month = true;
-                                                              _1year = true;
-                                                              _5year = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '6 month',
-                                                                    label:
-                                                                        'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('6 month'.tr)),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _1year
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _1year = !_1year;
-                                                            if (_6month == false ||
-                                                                _3month ==
-                                                                    false ||
-                                                                _5year ==
-                                                                    false) {
-                                                              _6month = true;
-                                                              _3month = true;
-                                                              _5year = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
+                                          height: size.height * 0.40,
+                                          child:  Column(
+                                            children: [
+                                              Card(
 
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '1 year',
-                                                                    label:
+                                              //  color: Colors.grey[200],
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    const SizedBox(height: 30.0, width: 30.0),
+                                                    Text(
+                                                      '               Subscription'.tr,
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.normal,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 30.0, width: 30.0),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1monthG
+                                                                  ? Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1monthG =
+                                                                !_1monthG;
+                                                                if (_1yearG == false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthS ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1yearG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                _paymentItems.add(
+                                                                    const PaymentItem(
+                                                                        amount:
+                                                                        '10',
+                                                                        label:
                                                                         'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('1 year'.tr)),
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _5year
-                                                              ? Colors.blue
-                                                              : Colors.grey,
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Month'.tr)),
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1yearG
+                                                                  ? Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1yearG = !_1yearG;
+                                                                if (_1monthG ==
+                                                                    false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthS ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1monthG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                _paymentItems.add(
+                                                                    const PaymentItem(
+                                                                        amount:
+                                                                        '100',
+                                                                        label:
+                                                                        'Luqia'));
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Year'.tr)),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.star,
+                                                            size: size.width * 0.10,
+                                                            color: Colors.amber,
+                                                          ),
+                                                          onPressed: () {},
                                                         ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _5year = !_5year;
-                                                            if (_6month ==
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1monthS
+                                                                  ? Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1monthS =
+                                                                !_1monthS;
+                                                                if (_1yearG == false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthG ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1yearG = true;
+                                                                  _1monthG = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                print(_paymentItems
+                                                                    .length);
+                                                                _paymentItems.add(
+                                                                    PaymentItem(
+                                                                      amount: '7',
+                                                                      label: 'Luqia',
+                                                                      status:
+                                                                      PaymentItemStatus
+                                                                          .final_price,
+                                                                    ));
+                                                                print(_paymentItems
+                                                                    .length);
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Month'.tr)),
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1yearS
+                                                                  ? Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1yearS = !_1yearS;
+                                                                if (_1yearG ==
                                                                     false ||
-                                                                _1year ==
-                                                                    false ||
-                                                                _3month ==
-                                                                    false) {
-                                                              _6month = true;
-                                                              _1year = true;
-                                                              _3month = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '5 Year',
-                                                                    label:
-                                                                        'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('5 Year'.tr)),
-                                                    // ElevatedButton(
-                                                    //     onPressed: () {},
-                                                    //     child: const Text('Silver subscription ')),
-                                                  ],
-                                                ),
-                                                Row(
-                                                    mainAxisAlignment:
+                                                                    _1monthS ==
+                                                                        false ||
+                                                                    _1monthG ==
+                                                                        false) {
+                                                                  _1monthG = true;
+                                                                  _1yearG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                              });
+
+                                                              _paymentItems.clear();
+                                                              _paymentItems.add(
+                                                                  const PaymentItem(
+                                                                      amount: '70',
+                                                                      label:
+                                                                      'Luqia'));
+                                                            },
+                                                            child:
+                                                            Text('1 Year'.tr)),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.star,
+                                                            size: size.width * 0.10,
+                                                            color: Colors.grey,
+                                                          ),
+                                                          onPressed: () {},
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                        mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
-                                                    children: [
-                                                      GooglePayButton(
-                                                        paymentConfigurationAsset:
+                                                        children: [
+                                                          GooglePayButton(
+                                                            paymentConfigurationAsset:
                                                             'default_payment_profile_google_pay.json',
-                                                        paymentItems:
+                                                            paymentItems:
                                                             _paymentItems,
-                                                        style:
+                                                            style:
                                                             GooglePayButtonStyle
                                                                 .white,
-                                                        type:
+                                                            type:
                                                             GooglePayButtonType
                                                                 .subscribe,
-                                                        width:
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
+                                                            height:
                                                             size.height * 0.05,
-                                                        margin: const EdgeInsets
-                                                            .only(top: 15.0),
-                                                        onPaymentResult:
+                                                            onPaymentResult:
                                                             onGooglePayResult,
-                                                        loadingIndicator:
+                                                            loadingIndicator:
                                                             const Center(
-                                                          child:
+                                                              child:
                                                               CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                      ApplePayButton(
-                                                        paymentConfigurationAsset:
+                                                            ),
+                                                          ),
+                                                          ApplePayButton(
+                                                            paymentConfigurationAsset:
                                                             'default_payment_profile_apple_pay.json',
-                                                        paymentItems:
+                                                            paymentItems:
                                                             _paymentItems,
-
-                                                        width:
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
+                                                            height:
                                                             size.height * 0.05,
-                                                        style:
+                                                            style:
                                                             ApplePayButtonStyle
                                                                 .black,
-                                                        type: ApplePayButtonType
-                                                            .subscribe,
-                                                        // margin:
-                                                        //     const EdgeInsets.only(
-                                                        //         top: 15.0),
-                                                        onPaymentResult:
+                                                            type: ApplePayButtonType
+                                                                .subscribe,
+                                                            onPaymentResult:
                                                             onApplePayResult,
-                                                        loadingIndicator:
+                                                            loadingIndicator:
                                                             const Center(
-                                                          child:
+                                                              child:
                                                               CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
+                                                            height:
                                                             size.height * 0.05,
-                                                        child: ElevatedButton(
-                                                          onPressed: () async {
-                                                            final request =
+                                                            child: ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                primary:  Color.fromRGBO(97,169,165, 1)
+                                                                    ,
+                                                              ),
+
+                                                              onPressed: () async {
+                                                                final request =
                                                                 BraintreeDropInRequest(
                                                                     tokenizationKey:
-                                                                        'sandbox_mfpvf5gy_8vnhdprsnv2vks96',
+                                                                    'sandbox_mfpvf5gy_8vnhdprsnv2vks96',
                                                                     collectDeviceData:
-                                                                        true,
+                                                                    true,
                                                                     googlePaymentRequest:
-                                                                        BraintreeGooglePaymentRequest(
+                                                                    BraintreeGooglePaymentRequest(
                                                                       totalPrice:
-                                                                          '4.20',
+                                                                      '4.20',
                                                                       currencyCode:
-                                                                          'USD',
+                                                                      'USD',
                                                                       billingAddressRequired:
-                                                                          false,
+                                                                      false,
                                                                     ),
                                                                     paypalRequest: BraintreePayPalRequest(
                                                                         amount:
-                                                                            '10.00',
+                                                                        '10.00',
                                                                         displayName:
-                                                                            'Luqia'),
+                                                                        'Luqia'),
                                                                     cardEnabled:
-                                                                        true);
-                                                            BraintreeDropInResult?
+                                                                    true);
+                                                                BraintreeDropInResult?
                                                                 result =
                                                                 await BraintreeDropIn
                                                                     .start(
-                                                                        request);
-                                                            if (result !=
-                                                                null) {
-                                                              print(result
-                                                                  .paymentMethodNonce
-                                                                  .description);
-                                                              print(result
-                                                                  .paymentMethodNonce
-                                                                  .nonce);
-                                                            }
-                                                          },
-                                                          child: Text('Pay'.tr),
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              ],
-                                            ),
-                                          ),
+                                                                    request);
+                                                                if (result !=
+                                                                    null) {
+                                                                  print(result
+                                                                      .paymentMethodNonce
+                                                                      .description);
+                                                                  print(result
+                                                                      .paymentMethodNonce
+                                                                      .nonce);
+                                                                }
+                                                              },
+                                                              child: Text('Pay'.tr),
+                                                            ),
+                                                          )
+                                                        ]),
+                                                    SizedBox(
+                                                      height: size.height * 0.05,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height *0.05,
+                                              ),
+                                              Button(onPressed: () async {
+
+
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>   ReqPage(uid: uid)
+                                                    ));
+
+                                              }, text: 'Requests'),
+
+                                            ],
+                                          )
                                         );
                                       } else if ((user)['role'] ==
                                           'normalUser') {
                                         return SizedBox(
                                           width: size.width * 0.99,
-                                          height: size.height * 0.25,
-                                          child: Card(
-                                            color: Colors.grey[200],
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _1monthG
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _1monthG =
-                                                                !_1monthG;
-                                                            if (_1yearG == false ||
-                                                                _1yearS ==
-                                                                    false ||
-                                                                _1monthS ==
-                                                                    false) {
-                                                              _1yearS = true;
-                                                              _1yearG = true;
-                                                              _1monthS = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '10',
-                                                                    label:
-                                                                        'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('1 Month'.tr)),
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _1yearG
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _1yearG = !_1yearG;
-                                                            if (_1monthG ==
-                                                                    false ||
-                                                                _1yearS ==
-                                                                    false ||
-                                                                _1monthS ==
-                                                                    false) {
-                                                              _1yearS = true;
-                                                              _1monthG = true;
-                                                              _1monthS = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            _paymentItems.add(
-                                                                const PaymentItem(
-                                                                    amount:
-                                                                        '100',
-                                                                    label:
-                                                                        'Luqia'));
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('1 Year'.tr)),
-                                                    IconButton(
-                                                      icon: Icon(
-                                                        Icons.star,
-                                                        size: size.width * 0.10,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      onPressed: () {},
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _1monthS
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _1monthS =
-                                                                !_1monthS;
-                                                            if (_1yearG == false ||
-                                                                _1yearS ==
-                                                                    false ||
-                                                                _1monthG ==
-                                                                    false) {
-                                                              _1yearS = true;
-                                                              _1yearG = true;
-                                                              _1monthG = true;
-                                                            }
-                                                            _paymentItems
-                                                                .clear();
-                                                            print(_paymentItems
-                                                                .length);
-                                                            _paymentItems.add(
-                                                                PaymentItem(
-                                                              amount: '7',
-                                                              label: 'Luqia',
-                                                              status:
-                                                                  PaymentItemStatus
-                                                                      .final_price,
-                                                            ));
-                                                            print(_paymentItems
-                                                                .length);
-                                                          });
-                                                        },
-                                                        child:
-                                                            Text('1 Month'.tr)),
-                                                    ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary: _1yearS
-                                                              ? Colors.blue
-                                                              : Colors.grey,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _1yearS = !_1yearS;
-                                                            if (_1yearG ==
-                                                                    false ||
-                                                                _1monthS ==
-                                                                    false ||
-                                                                _1monthG ==
-                                                                    false) {
-                                                              _1monthG = true;
-                                                              _1yearG = true;
-                                                              _1monthS = true;
-                                                            }
-                                                          });
+                                          height: size.height * 0.45,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Card(
 
-                                                          _paymentItems.clear();
-                                                          _paymentItems.add(
-                                                              const PaymentItem(
-                                                                  amount: '70',
-                                                                  label:
-                                                                      'Luqia'));
-                                                        },
-                                                        child:
-                                                            Text('1 Year'.tr)),
-                                                    IconButton(
-                                                      icon: Icon(
-                                                        Icons.star,
-                                                        size: size.width * 0.10,
+                                                //color: Colors.grey[200],
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  children: [
+                                                    const SizedBox(height: 30.0, width: 30.0),
+                                                    Text(
+                                                      '               Subscription'.tr,
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.normal,
                                                         color: Colors.grey,
                                                       ),
-                                                      onPressed: () {},
                                                     ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                    mainAxisAlignment:
+                                                    const SizedBox(height: 30.0, width: 30.0),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1monthG
+                                                                  ?  Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1monthG =
+                                                                !_1monthG;
+                                                                if (_1yearG == false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthS ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1yearG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                _paymentItems.add(
+                                                                    const PaymentItem(
+                                                                        amount:
+                                                                        '10',
+                                                                        label:
+                                                                        'Luqia'));
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Month'.tr)),
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1yearG
+                                                                  ?  Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1yearG = !_1yearG;
+                                                                if (_1monthG ==
+                                                                    false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthS ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1monthG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                _paymentItems.add(
+                                                                    const PaymentItem(
+                                                                        amount:
+                                                                        '100',
+                                                                        label:
+                                                                        'Luqia'));
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Year'.tr)),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.star,
+                                                            size: size.width * 0.10,
+                                                            color: Colors.amber,
+                                                          ),
+                                                          onPressed: () {},
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                      children: [
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1monthS
+                                                                  ?  Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1monthS =
+                                                                !_1monthS;
+                                                                if (_1yearG == false ||
+                                                                    _1yearS ==
+                                                                        false ||
+                                                                    _1monthG ==
+                                                                        false) {
+                                                                  _1yearS = true;
+                                                                  _1yearG = true;
+                                                                  _1monthG = true;
+                                                                }
+                                                                _paymentItems
+                                                                    .clear();
+                                                                print(_paymentItems
+                                                                    .length);
+                                                                _paymentItems.add(
+                                                                    PaymentItem(
+                                                                      amount: '7',
+                                                                      label: 'Luqia',
+                                                                      status:
+                                                                      PaymentItemStatus
+                                                                          .final_price,
+                                                                    ));
+                                                                print(_paymentItems
+                                                                    .length);
+                                                              });
+                                                            },
+                                                            child:
+                                                            Text('1 Month'.tr)),
+                                                        ElevatedButton(
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                              primary: _1yearS
+                                                                  ?  Color.fromRGBO(97,169,165, 1)
+                                                                  : Colors.grey,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _1yearS = !_1yearS;
+                                                                if (_1yearG ==
+                                                                    false ||
+                                                                    _1monthS ==
+                                                                        false ||
+                                                                    _1monthG ==
+                                                                        false) {
+                                                                  _1monthG = true;
+                                                                  _1yearG = true;
+                                                                  _1monthS = true;
+                                                                }
+                                                              });
+
+                                                              _paymentItems.clear();
+                                                              _paymentItems.add(
+                                                                  const PaymentItem(
+                                                                      amount: '70',
+                                                                      label:
+                                                                      'Luqia'));
+                                                            },
+                                                            child:
+                                                            Text('1 Year'.tr)),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.star,
+                                                            size: size.width * 0.10,
+                                                            color: Colors.grey,
+                                                          ),
+                                                          onPressed: () {},
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.02,
+                                                    ),
+                                                    Row(
+                                                        mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceAround,
-                                                    children: [
-                                                      GooglePayButton(
-                                                        paymentConfigurationAsset:
+                                                        children: [
+                                                          GooglePayButton(
+                                                            paymentConfigurationAsset:
                                                             'default_payment_profile_google_pay.json',
-                                                        paymentItems:
+                                                            paymentItems:
                                                             _paymentItems,
-                                                        style:
+                                                            style:
                                                             GooglePayButtonStyle
                                                                 .white,
-                                                        type:
+                                                            type:
                                                             GooglePayButtonType
                                                                 .subscribe,
-                                                        width:
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
-                                                            size.height * 0.05,
-                                                        onPaymentResult:
+                                                            // height:
+                                                            // size.height * 0.05,
+                                                            onPaymentResult:
                                                             onGooglePayResult,
-                                                        loadingIndicator:
+                                                            loadingIndicator:
                                                             const Center(
-                                                          child:
+                                                              child:
                                                               CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                      ApplePayButton(
-                                                        paymentConfigurationAsset:
+                                                            ),
+                                                          ),
+                                                          ApplePayButton(
+                                                            paymentConfigurationAsset:
                                                             'default_payment_profile_apple_pay.json',
-                                                        paymentItems:
+                                                            paymentItems:
                                                             _paymentItems,
-                                                        width:
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
+                                                            height:
                                                             size.height * 0.05,
-                                                        style:
+                                                            style:
                                                             ApplePayButtonStyle
                                                                 .black,
-                                                        type: ApplePayButtonType
-                                                            .subscribe,
-                                                        onPaymentResult:
+                                                            type: ApplePayButtonType
+                                                                .subscribe,
+                                                            onPaymentResult:
                                                             onApplePayResult,
-                                                        loadingIndicator:
+                                                            loadingIndicator:
                                                             const Center(
-                                                          child:
+                                                              child:
                                                               CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width:
                                                             size.width * 0.40,
-                                                        height:
+                                                            height:
                                                             size.height * 0.05,
-                                                        child: ElevatedButton(
-                                                          onPressed: () async {
-                                                            final request =
+                                                            child: ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                primary:  Color.fromRGBO(97,169,165, 1)
+                                                                ,
+                                                              ),
+                                                              onPressed: () async {
+
+                                                                final request =
                                                                 BraintreeDropInRequest(
                                                                     tokenizationKey:
-                                                                        'sandbox_mfpvf5gy_8vnhdprsnv2vks96',
+                                                                    'sandbox_mfpvf5gy_8vnhdprsnv2vks96',
                                                                     collectDeviceData:
-                                                                        true,
+                                                                    true,
                                                                     googlePaymentRequest:
-                                                                        BraintreeGooglePaymentRequest(
+                                                                    BraintreeGooglePaymentRequest(
                                                                       totalPrice:
-                                                                          '4.20',
+                                                                      '4.20',
                                                                       currencyCode:
-                                                                          'USD',
+                                                                      'USD',
                                                                       billingAddressRequired:
-                                                                          false,
+                                                                      false,
                                                                     ),
                                                                     paypalRequest: BraintreePayPalRequest(
                                                                         amount:
-                                                                            '10.00',
+                                                                        '10.00',
                                                                         displayName:
-                                                                            'Luqia'),
+                                                                        'Luqia'),
                                                                     cardEnabled:
-                                                                        true);
-                                                            BraintreeDropInResult?
+                                                                    true);
+                                                                BraintreeDropInResult?
                                                                 result =
                                                                 await BraintreeDropIn
                                                                     .start(
-                                                                        request);
-                                                            if (result !=
-                                                                null) {
-                                                              print(result
-                                                                  .paymentMethodNonce
-                                                                  .description);
-                                                              print(result
-                                                                  .paymentMethodNonce
-                                                                  .nonce);
-                                                            }
-                                                          },
-                                                          child: Text('Pay'.tr),
-                                                        ),
-                                                      )
-                                                    ]),
-                                              ],
-                                            ),
-                                          ),
+                                                                    request);
+                                                                if (result !=
+                                                                    null) {
+                                                                  print(result
+                                                                      .paymentMethodNonce
+                                                                      .description);
+                                                                  print(result
+                                                                      .paymentMethodNonce
+                                                                      .nonce);
+                                                                }
+                                                              },
+                                                              child: Text('Pay'.tr),
+                                                            ),
+                                                          )
+                                                        ]),
+                                                    SizedBox(
+                                                      height: size.height * 0.02,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: size.height *0.05,
+                                              ),
+                                              Button(
+
+                                                  onPressed: () async {
+
+
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>   ReqPage(uid: uid)
+                                                    ));
+
+                                              }, text: 'Requests')
+                                            ],
+                                          )
+
+
                                         );
                                       } else {
                                         return const Material(
@@ -700,6 +811,7 @@ class _SettingPageState extends State<SettingPage>
                             })
                       ],
                     ),
+
                     // ),
                   ],
                 ),
@@ -744,10 +856,12 @@ class _SettingPageState extends State<SettingPage>
           children: [
             Text(
               "          Name".tr,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              // style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 50.0),
-            Text(name!),
+            Text(name! ,
+              // style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
         const SizedBox(height: 50.0),
@@ -755,10 +869,12 @@ class _SettingPageState extends State<SettingPage>
           children: [
             Text(
               "          Email".tr,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              // style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 50.0),
-            Text(email!),
+            Text(email!,
+              // style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+    ),
           ],
         ),
         const SizedBox(height: 50.0),
@@ -766,7 +882,7 @@ class _SettingPageState extends State<SettingPage>
           children: [
             Text(
               "          Language".tr,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              // style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 50.0),
             DropdownButton<String>(

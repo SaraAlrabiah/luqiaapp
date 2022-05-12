@@ -31,13 +31,11 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             UserHelper.saveAdmin(snapshot.data!);
-
-            // ignore: non_constant_identifier_names
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
-            Dashboard.userDashboard(uid);
+            final userEmail = currentUser.email;
+            Dashboard.userDashboard(uid,userEmail! );
             Dashboard.usersCount(uid);
-            //  var email = currentUser.email;
             return Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
@@ -77,25 +75,19 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                   ),
                 ],
                 bottom: TabBar(
-                  controller: _tabController,
-                  tabs: const <Widget>[
-                    Tab(
-                      icon: Icon(Icons.cloud_outlined),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.beach_access_sharp),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.brightness_5_sharp),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.brightness_5_sharp),
-                    ),
-                  ],
-                ),
+                    indicatorColor:  Color.fromRGBO(	83, 83, 83, 1),
+                    labelColor: Color.fromRGBO(	83, 83, 83, 1),
+                 labelStyle: TextStyle(fontSize: 11),
+                    controller: _tabController,
+                    tabs:  <Widget>[
+                Tab(text: 'Users', icon: Icon(Icons.person , color: Colors.black,)),
+                Tab(text: 'Groups', icon: Icon(Icons.group , color: Colors.black,)),
+                Tab(text: 'Dashboard', icon: Icon(Icons.dashboard , color: Colors.black,)),
+                Tab(text: 'Actions', icon: Icon(Icons.track_changes , color: Colors.black,)),
+]
               ),
-              body: //SingleChildScrollView( child:
-                  TabBarView(
+              ),
+              body: TabBarView(
                 controller: _tabController,
                 children: <Widget>[
                   SingleChildScrollView(
@@ -109,8 +101,6 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
-                              // ignore: unused_local_variable
-
                               var currentUser =
                                   FirebaseAuth.instance.currentUser;
                               var email = currentUser!.email;
@@ -123,9 +113,6 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                   DocumentSnapshot document =
                                       snapshot.data!.docs[index];
                                   final users = docs[index].data();
-                                  // final userDoc = snapshot.data;
-                                  //  final userInfo = userDoc;
-                                  // ignore: prefer_const_constructors
                                   if ((users as Map<String, dynamic>)['role'] ==
                                       'normalUser') {
                                     return ListTile(
@@ -154,12 +141,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                           },
                         ),
                         // ignore: deprecated_member_use
-                        RaisedButton(
-                          child: const Text("Log out"),
-                          onPressed: () {
-                            AuthHelper.logOut();
-                          },
-                        )
+
                       ],
                     ),
                   ),

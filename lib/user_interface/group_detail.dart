@@ -43,7 +43,8 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
             UserHelper.saveAdmin(snapshot.data!);
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
-            Dashboard.userDashboard(uid);
+            final userEmail = currentUser.email;
+            Dashboard.userDashboard(uid,userEmail! );
 
            // var email = currentUser.email;
             return  Scaffold(
@@ -88,7 +89,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                       children: <Widget>[
                         StreamBuilder(
                           stream:
-                          FirebaseFirestore.instance.collection('Meetings').where('GroupId' , isEqualTo: groupId)
+                          FirebaseFirestore.instance.collection('Group').doc(groupId).collection('Meetings')
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -150,6 +151,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                                               builder: (context) =>
                                                   MeetingDetail(
                                                     meetingId: meetingId,
+                                                    groupId: groupId,
                                                   ),
                                             ),
                                           );

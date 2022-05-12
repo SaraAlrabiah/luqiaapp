@@ -14,26 +14,28 @@ class Button extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width * 0.5,
-      height: size.height * 0.3,
+      height: size.height * 0.08,
       child: Column(
+
         children: [
-      SizedBox(
-      width: size.width * 0.1,
-        height: size.height * 0.05,),
+      // SizedBox(
+      // width: size.width * 0.1,
+      //   height: size.height * 0.0005,),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Color.fromRGBO(97,169,165, 1),
-              onPrimary: Color.fromRGBO(	83, 83, 83, 1),
+              onPrimary: Colors.white,
+              //Color.fromRGBO(	83, 83, 83, 1),
               // onPrimary: Color(669999),
               //535353
               // 61A9A5
 
-              padding: EdgeInsets.symmetric(horizontal: size.width *0.01, vertical: size.width * 0.05),
+              padding: EdgeInsets.symmetric(horizontal: size.width *0.05, vertical: size.width * 0.01),
               textStyle: TextStyle(
                   fontSize: size.width *0.05,
                   fontWeight: FontWeight.bold)),
             onPressed: onPressed,
-            child: Text(text),)
+            child: Text(text , textAlign: TextAlign.center,),)
         ],
 
 

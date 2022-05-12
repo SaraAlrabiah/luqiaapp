@@ -66,22 +66,20 @@ class _GroupUserPageState extends State<GroupUserPage>
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
                 backgroundColor: Colors.white,
-                title: const Text('Create Group'),
+                title: const Text('Create Group' , style: TextStyle(color: Colors.black),),
                 leading: IconButton(
                   onPressed: () {
                     Navigator.pop(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>   MainScreen(
-                          ),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen()),
+                    );
                   },
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back_ios , color: Colors.black,),
                 ),
+
               ),
-              body:
-              //TabBarView(controller: _tabController, children: <Widget>[
-                Scaffold(
+              body:               Scaffold(
                   body: Form(
                     key: _form,
 

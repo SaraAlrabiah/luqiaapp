@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "286352183911",
-    "project_id": "luqia-c71e7",
-    "storage_bucket": "luqia-c71e7.appspot.com"
+    "project_number": "177305198734",
+    "project_id": "luqia-4f1a3",
+    "storage_bucket": "luqia-4f1a3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:286352183911:android:d553b0859d46882f80fac2",
+        "mobilesdk_app_id": "1:177305198734:android:4e06165b0d82cdfa2ae9df",
         "android_client_info": {
           "package_name": "com.gp.luqiaapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "286352183911-b0a2se3jn57reah5bi34n3rvkbha5ma6.apps.googleusercontent.com",
+          "client_id": "177305198734-67bppmcrfm7nn3i50n9ju9f2drkvncup.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbyUpoNcEfdp3lYQvMYu-4tny3X2UDaqE"
+          "current_key": "AIzaSyCVxQf9Sbg9SDRsYWCeqDCDDoLKzimqdFY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "286352183911-b0a2se3jn57reah5bi34n3rvkbha5ma6.apps.googleusercontent.com",
+              "client_id": "177305198734-67bppmcrfm7nn3i50n9ju9f2drkvncup.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "286352183911-87tphf38d14u3h52sver8034eqkkncbp.apps.googleusercontent.com",
+              "client_id": "177305198734-ntnkm0fuh4af9f4qpilu1t4ngtbge63v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.gp.luqiaapp"

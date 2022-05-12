@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
+import 'package:luqiaapp/style/button.dart';
 import 'package:luqiaapp/user_interface/signup.dart';
 
 import 'company_signup.dart';
@@ -10,17 +10,14 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
-
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController(
-      text: "" );
-  TextEditingController _passwordController = TextEditingController(
-      text: "" );
+  TextEditingController _emailController = TextEditingController(text: "");
+  TextEditingController _passwordController = TextEditingController(text: "");
 
   @override
   final _form = GlobalKey<FormState>();
 
+  bool notvalid = false;
 
 
 //saving form after validation
@@ -32,26 +29,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void initState() {
-    super.initState(
-    );
-    _emailController = TextEditingController(
-        text: "" );
-    _passwordController = TextEditingController(
-        text: "" );
+    super.initState();
+    _emailController = TextEditingController(text: "");
+    _passwordController = TextEditingController(text: "");
+
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Form(
-        key: _form, //assigning key to form
+        key: _form,
 
         child: ListView(
-
           children: <Widget>[
             Column(
               children: [
@@ -67,98 +58,104 @@ class _LoginPageState extends State<LoginPage> {
                 const Text(
                   "Login",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 50.0 , color:  Color(0xff616161)
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50.0,
+                      color: Color(0xff616161)),
                 ),
                 SizedBox(
                   width: size.width * 0.85,
                   // height: 750,
                   child: Card(
-
-
-                    child : Column(
+                    child: Column(
                       children: [
+                        Text(notvalid ? 'User not found' : ' '),
+
+
                         TextFormField(
                           controller: _emailController,
-                          decoration: const InputDecoration(labelText: 'Email Address'),
+
+                          decoration:
+                              const InputDecoration(labelText: 'Email Address'),
                           validator: (text) {
-                            if (!(text!.contains('@')) && text.isNotEmpty || text.isEmpty) {
+                            if (!(text!.contains('@')) && text.isNotEmpty ||
+                                text.isEmpty) {
                               return "Enter a valid email address!";
                             }
+
                             return null;
+
+
                           },
                         ),
-
                         TextFormField(
                           controller: _passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(labelText: 'Password'),
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
                           validator: (text) {
-                            if (!(text!.length > 5) && text.isNotEmpty || text.isEmpty) {
+                            if (!(text!.length > 5) && text.isNotEmpty ||
+                                text.isEmpty) {
                               return "Enter valid Password of more then 5 characters!";
                             }
+
                             return null;
                           },
-
                         ),
-                        SizedBox(height: size.height * 0.05,),
-                        ElevatedButton(
-                            child: const Text('Login'),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        ),
+
+
+                        Button(
                             onPressed: () async {
+
                               _saveForm();
                               try {
                                 final user = await AuthHelper.signInWithEmail(
                                     email: _emailController.text,
-                                    password: _passwordController.text );
+                                    password: _passwordController.text);
+                                print(user);
+
                                 if (user != null) {
-                                  print(
-                                      "login successful" );
+
+                                  print("login successful");
                                 }
+
                               } catch (e) {
-                                print(
-                                    e );
+                                print(e);
                               }
-                            }
+                            },
+                            text: 'Login'),
+                        Button(
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const SignupPage(),
+                                  ));
+                            },
+                            text: "Create Account As Individual"),
+                        SizedBox(
+                          height: size.height * 0.03,
                         ),
-                        ElevatedButton(
-                          child: const Text(
-                              "Create Account As Individual" ),
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                  const SignupPage(
-                                  ),
-                                ) );
-                          },
-                        ),
-                        ElevatedButton(
-                            child: const Text("Sign up as company "),
+                        Button(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => CompanySignupPage(),
                                   ));
-                            }),
+                            },
+                            text: "Sign up as company ")
                       ],
                     ),
                   ),
                 ),
-
               ],
             ),
-
-
           ],
         ),
       ),
-
     );
   }
-
-
 }
-
-

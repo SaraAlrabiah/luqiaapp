@@ -56,41 +56,7 @@ class GroupOperation {
       db.collection( "users" ).doc( currentUserId ).collection('Group').doc(groupID).set(groupInfo);
 
   }
-  /*static Future<void> AddNewUser(String userID,String userEmail,
-      String GroupID , String groupName, String groupActivity ,String currentUserId,String currentUserEmail,) async {
-    // Add user to current user's following collection
-    final Group = db.collection("Group").doc(GroupID).get();
-    final userRef = db
-        .collection("users")
-        .doc(currentUserId)
-        .collection("Group")
-        .doc(GroupID);
-    // ignore: non_constant_identifier_names
-    Map<String, dynamic> GroupInfo = {
-      'groupId':  GroupID,
-      'CreateById': userID,
-      'CreateByEmail': userEmail,
-      'GroupName': groupName,
-      'GroupActivity': groupActivity
 
-    };
-
-      db
-          .collection( "users" ).doc( userID ).collection( "Group" ).doc(GroupID).set(GroupInfo);
-
-
-
-
-     Map<String, dynamic> groupDec = {
-        'email': userEmail,
-        'id': userID,
-      };
-
-      db
-          .collection("Group")
-          .doc(GroupID).collection("GroupMember").add(groupDec);
-
-  }*/
   static Future<void> addGroupMember(  String GroupID  , String currentUserId,String currentUserEmail ) async {
     Map<String, dynamic> groupDec = {
       'email': currentUserEmail,
@@ -102,7 +68,7 @@ class GroupOperation {
         "Group" )
         .doc(
         GroupID ).collection(
-        'GroupMember' ).doc(
+        'GroupMember' ).doc( currentUserId
     ).set(
         groupDec );
   }
@@ -136,7 +102,6 @@ class GroupOperation {
 
     }
 
-    // db.collection('users').doc(userID).collection('Group').doc(GroupID).collection(userEmail).add(GroupInfo);
 
 
   }

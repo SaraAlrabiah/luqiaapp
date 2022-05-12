@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
+import 'package:luqiaapp/style/button.dart';
 import 'package:luqiaapp/user_interface/user_page.dart';
 import 'company_signup.dart';
 import 'login.dart';
@@ -134,65 +135,58 @@ class _SignupPage extends State<SignupPage> {
                                 },
                               ),
                                SizedBox(height: size.height * 0.05,),
-                              ElevatedButton(
-                                child: const Text("Sign up"),
-                                onPressed: () async {
-                                  _saveForm();
-                                  if (_emailController.text.isEmpty ||
-                                      _passwordController.text.isEmpty) {
-                                    if (kDebugMode) {
-                                      print("Email and password cannot be empty");
-                                    }
-                                    return;
+                              Button(onPressed: () async {
+                                _saveForm();
+                                if (_emailController.text.isEmpty ||
+                                    _passwordController.text.isEmpty) {
+                                  if (kDebugMode) {
+                                    print("Email and password cannot be empty");
                                   }
-                                  if (_confirmPasswordController.text.isEmpty ||
-                                      _passwordController.text !=
-                                          _confirmPasswordController.text) {
-                                    print("confirm password does not match");
-                                    return;
-                                  }
-                                  try {
-                                    final user = await AuthHelper.signupWithEmail(
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                    );
-                                    if (user != null) {
-                                      AuthHelper.addName(
-                                          _firstNameController.text, user);
-                                      UserHelper.saveUser(
-                                          user /*, _firstNameController.text */);
+                                  return;
+                                }
+                                if (_confirmPasswordController.text.isEmpty ||
+                                    _passwordController.text !=
+                                        _confirmPasswordController.text) {
+                                  print("confirm password does not match");
+                                  return;
+                                }
+                                try {
+                                  final user = await AuthHelper.signupWithEmail(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                                  if (user != null) {
+                                    AuthHelper.addName(
+                                        _firstNameController.text, user);
+                                    UserHelper.saveUser(
+                                        user /*, _firstNameController.text */);
 
-                                      print("signup successful");
-                                      //       Navigator.pop( context );
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>  LoginPage(),
-                                          ));
-                                    }
-                                  } catch (e) {
-                                    print(e);
+                                    print("signup successful");
+                                    //       Navigator.pop( context );
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>  LoginPage(),
+                                        ));
                                   }
-                                },
-                              ),
-                              ElevatedButton(
-                                  child: const Text("Login"),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => LoginPage(),
-                                        ));
-                                  }),
-                              ElevatedButton(
-                                  child: const Text("Sign up as company "),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => CompanySignupPage(),
-                                        ));
-                                  }),
+                                } catch (e) {
+                                  print(e);
+                                }
+                              }, text: "Sign up"),
+                              Button(onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => LoginPage(),
+                                    ));
+                              }, text: "Login"),
+                              Button(onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => CompanySignupPage(),
+                                    ));
+                              }, text: "Sign up as company "),
                             ],
                           )
 

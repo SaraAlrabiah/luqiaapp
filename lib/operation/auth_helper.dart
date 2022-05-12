@@ -35,7 +35,6 @@ class AuthHelper {
       {required String email, required String password}) async {
     final res =
         await db.signInWithEmailAndPassword(email: email, password: password);
-    // await db.signInWithPhoneNumber(email);
     AdminTrack.usersTrack(email, 'Login In', DateTime.now());
     final User? user = res.user;
 

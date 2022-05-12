@@ -61,6 +61,15 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
                 style: const TextStyle(color: Colors.black, fontSize: 25.0),
               ),
             ]),
+        leading:  IconButton(
+          icon: const Icon(Icons.arrow_back_ios_outlined , color: Colors.black,),
+          tooltip: 'back',
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add , color: Colors.black,),

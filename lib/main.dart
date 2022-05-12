@@ -14,6 +14,7 @@ import 'localization/localization_services.dart';
 import 'operation/auth_helper.dart';
 import 'operation/location_operation.dart';
 void main() async {
+  // MeetingOperation.comingBy1(DateTime.now());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();

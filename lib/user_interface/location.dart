@@ -39,8 +39,8 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
   int polygon = 1;
   var newPoint ;
 
-  Position? _currentPosition;
-  String? _currentAddress;
+  Position? _currentPosition ;
+  // String? _currentAddress;
   Future<void> _goToPlace(Map<String , dynamic> place) async {
     final double lat = place['geometry']['location']['lat'];
     final double lng = place['geometry']['location']['lng'];
@@ -54,56 +54,57 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
 
 
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  // Future<Position> _determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     return Future.error("Location services are disabled.");
+  //   }
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.deniedForever) {
+  //     return Future.error(
+  //         "Location permissions are permantly denied. we cannot request permissions.");
+  //   }
+  //
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission != LocationPermission.whileInUse &&
+  //         permission != LocationPermission.always) {
+  //       return Future.error(
+  //           "Location permissions are denied (actual value: $permission).");
+  //     }
+  //   }
+  //
+  //   var location = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   print(location.latitude);
+  //   print(location.longitude);
+  //   latlng[0] = location.latitude;
+  //   latlng[1] = location.longitude;
+  //   print(latlng[0]);
+  //   print(latlng[1]);
+  //   return location;
+  // }
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error("Location services are disabled.");
-    }
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          "Location permissions are permantly denied. we cannot request permissions.");
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return Future.error(
-            "Location permissions are denied (actual value: $permission).");
-      }
-    }
-
-    var location = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(location.latitude);
-    print(location.longitude);
-    latlng[0] = location.latitude;
-    latlng[1] = location.longitude;
-    print(latlng[0]);
-    print(latlng[1]);
-    return location;
-  }
-
-
-  static  final CameraPosition _kGooglePlex =  CameraPosition(
-    target: LatLng( 25.53548, 45.22072),
+     CameraPosition _kGooglePlex =  CameraPosition(
+    target: LatLng(25.897952430231378, 45.34363187849522),
     zoom: 14.4746,
   );
 
   @override
+
   void initState(){
-    super.initState();
     getCurrentLocation();
-print(_currentPosition);
+    super.initState();
+
     _setMarker(
          LatLng(
-
-             25.544638870251752, 45.22577494382858
+           //  _currentPosition!.latitude  ,  _currentPosition!.longitude
+             25.897952430231378, 45.34363187849522
         ));
 
 
@@ -122,7 +123,7 @@ print(_currentPosition);
     }
     return await Geolocator.getCurrentPosition();
   }
-  getCurrentLocation() {
+   getCurrentLocation() {
     Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
         forceAndroidLocationManager: true)
@@ -135,6 +136,14 @@ print(_currentPosition);
     }).catchError((e) {
       print(e);
     });
+    // if(_currentPosition != null){
+    // return _currentPosition;}
+    // else {
+    //   return  (
+    //     //  _currentPosition!.latitude  ,  _currentPosition!.longitude
+    //       25.54746239768478, 45.209941193461425
+    //   );
+    // }
   }
 
   Future<void> _setMarker(LatLng point) async {
@@ -156,6 +165,7 @@ print(_currentPosition);
         backgroundColor: Colors.white,
         title: const Text('Location SetUp'),
         leading: IconButton(
+          color: Colors.black,
           onPressed: () {
 
             Navigator.pop(
@@ -165,11 +175,12 @@ print(_currentPosition);
 
 
           },
-          icon: const Icon(Icons.backspace_outlined),
+          icon: const Icon(Icons.arrow_back_ios_outlined),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
+            color: Colors.black,
             tooltip: 'Add',
             onPressed: () {
               MeetingOperation.addMeetingTime(meetingTitle, meetingDescreiption, groupId, dateTime , email , newPoint);
@@ -185,9 +196,7 @@ print(_currentPosition);
         ],
       ),
 
-      body: //SingleChildScrollView(
-
-      // child:
+      body:
       Column(
         children: [
           Row(
@@ -196,7 +205,7 @@ print(_currentPosition);
                 child: TextFormField(
                   controller: _search,
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(hintText: 'Serch for meeting location '),
+                  decoration: const InputDecoration(hintText: 'Search for meeting location '),
                   onChanged: (value){
                   },
                 ),
@@ -216,7 +225,7 @@ print(_currentPosition);
               mapType: MapType.normal,
               polygons:_polygon,
               markers: _marker,
-              initialCameraPosition: _kGooglePlex,
+              initialCameraPosition:_kGooglePlex,
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
@@ -226,12 +235,6 @@ print(_currentPosition);
                   _setMarker( point);
                  newPoint = point;
                  print(newPoint);
-                 // MeetingOperation.addMeetingTime(meetingTitle, meetingDescreiption, groupId, dateTime , email , point);
-
-                  //LocationService().getDirection (point.latitude, point.longitude , point.latitude, point.longitude )  ;
-                  // this is meeting place
-                  // polygonLatLng.add(point);
-                  // _setPolygon();
                 });
               },
             ),
@@ -243,15 +246,6 @@ print(_currentPosition);
   }
 
 
-  // Future<void> _goToPlace(Map<String , dynamic> place) async {
-  //   final double lat = place['geometry']['location']['lat'];
-  //   final double lng = place['geometry']['location']['lng'];
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(
-  //       CameraPosition(target: LatLng(lat, lng), zoom: 12)
-  //
-  //   ));
-  //   _setMarker(LatLng(lat, lng));
-  // }
+
 }
 

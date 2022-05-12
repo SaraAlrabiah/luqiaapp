@@ -11,12 +11,12 @@ import 'login.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class CurrentMeetingDetail extends StatefulWidget {
-  CurrentMeetingDetail({Key? key, this.meetingId}) : super(key: key);
+  CurrentMeetingDetail({Key? key, this.meetingId , this.groupId}) : super(key: key);
   final meetingId;
-
+final groupId;
   @override
   _CurrentMeetingDetailState createState() =>
-      _CurrentMeetingDetailState(meetingId);
+      _CurrentMeetingDetailState(meetingId , groupId);
 }
 
 class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
@@ -64,7 +64,9 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
   String _text = 'Press and start ';
   double _confidence = 1.0;
   var meetingId;
-  _CurrentMeetingDetailState(this.meetingId);
+
+  var groupId;
+  _CurrentMeetingDetailState(this.meetingId, this.groupId);
 
   @override
   void initState() {
@@ -82,8 +84,9 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
             UserHelper.saveUser(snapshot.data!);
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
-            Dashboard.userDashboard(uid);
-            MeetingOperation.estimatedTime(meetingId);
+            final userEmail = currentUser.email;
+            Dashboard.userDashboard(uid,userEmail! );
+            MeetingOperation.estimatedTime(meetingId , groupId);
             return Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
@@ -124,7 +127,7 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance
+                      stream: FirebaseFirestore.instance.collection('Group').doc(groupId)
                           .collection('Meetings')
                           .doc(meetingId)
                           .collection('EstimatedTime')
@@ -141,6 +144,8 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                               DocumentSnapshot document =
                                   snapshot.data!.docs[index];
                               return ListTile(
+
+
                                 leading: const Icon(Icons.date_range),
                                 title: Text(document['email']),
                                 subtitle: Column(
@@ -188,7 +193,7 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                               if (
                               _text != 'Press and start ' &&
                                   _text.isNotEmpty) {
-                                MeetingOperation.addComment(meetingId, _text);
+                                MeetingOperation.addComment(meetingId, _text , groupId);
                               }
                             },
                             child: Text("Send"))
