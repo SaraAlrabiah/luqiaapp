@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'localization/localization_services.dart';
 import 'operation/auth_helper.dart';
 import 'operation/location_operation.dart';
+
 void main() async {
   // MeetingOperation.comingBy1(DateTime.now());
   WidgetsFlutterBinding.ensureInitialized();
@@ -99,11 +100,11 @@ class _MainScreenState extends State<MainScreen> {
                     return  UserPage(uid: uid,);
                   } else if ((user)['role'] == 'companyUser') {
                     return UserPage(uid: uid,);
-                    // const CompanyUserPage();
                   } else {
                     return LoginPage();
                   }
-                } else {
+                }
+                else {
                   return const Material(
                     child: Center(
                       child: CircularProgressIndicator(),

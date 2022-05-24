@@ -109,11 +109,11 @@ class _GroupUserPageState extends State<GroupUserPage>
                                   SizedBox(height: size.height * 0.05),
                                   TextFormField(
                                     controller: _GroupActivityController,
-                                    decoration: const InputDecoration(
-                                        hintText: "Enter Group Activity"),
+                                    decoration:  InputDecoration(
+                                        hintText: "Enter Group Activity".tr),
                                     validator: (text) {
                                       if (text!.isEmpty) {
-                                        return "Enter valid Group Activity";
+                                        return "Enter valid Group Activity".tr;
                                       }
                                       return null;
                                     },
@@ -148,7 +148,7 @@ class _GroupUserPageState extends State<GroupUserPage>
                                         print(e);
                                       }
                                     }
-                                  }, text: 'Add')
+                                  }, text: 'Add'.tr)
                                 ],
                               ),
                             ),

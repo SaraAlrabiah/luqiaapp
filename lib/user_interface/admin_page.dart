@@ -80,10 +80,10 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                  labelStyle: TextStyle(fontSize: 11),
                     controller: _tabController,
                     tabs:  <Widget>[
-                Tab(text: 'Users', icon: Icon(Icons.person , color: Colors.black,)),
-                Tab(text: 'Groups', icon: Icon(Icons.group , color: Colors.black,)),
-                Tab(text: 'Dashboard', icon: Icon(Icons.dashboard , color: Colors.black,)),
-                Tab(text: 'Actions', icon: Icon(Icons.track_changes , color: Colors.black,)),
+                Tab(text: 'Users'.tr, icon: Icon(Icons.person , color: Colors.black,)),
+                Tab(text: 'Companies'.tr, icon: Icon(Icons.group , color: Colors.black,)),
+                Tab(text: 'Dashboard'.tr, icon: Icon(Icons.dashboard , color: Colors.black,)),
+                Tab(text: 'Actions'.tr, icon: Icon(Icons.track_changes , color: Colors.black,)),
 ]
               ),
               ),
@@ -175,8 +175,6 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                           children: [
                                             Row(
                                               children: [
-                                                Text(document['role']),
-                                                const Text(" is "),
                                                 Text(
                                                   document['name'],
                                                 ),
@@ -184,12 +182,23 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                             ),
                                             Row(
                                               children: [
-                                                const Text(" at "),
+                                                IconButton(
+                                                   // padding: EdgeInsets.only(left: 30),
+                                                    onPressed: null, icon: Icon( Icons.location_on_rounded) ),
+
                                                 Text(
                                                     document['companyAddress']),
-                                                const Text(" Work in "),
+
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                IconButton(
+
+                                                    onPressed: null, icon: Icon( Icons.work) ),
+
                                                 Text(document[
-                                                    'companySpecification']),
+                                                'companySpecification']),
                                               ],
                                             )
                                           ],
@@ -223,9 +232,6 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
-                              // var currentUser = FirebaseAuth.instance.currentUser;
-
-                              //   var  email = currentUser!.email;
                               final docs = snapshot.data!.docs;
                               //     Dashboard.usersCount();
                               return ListView.builder(
@@ -235,14 +241,9 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                 itemBuilder: (context, index) {
                                   DocumentSnapshot document =
                                       snapshot.data!.docs[index];
-                                  // final users = docs[index].data();
-                                  // final userDoc = snapshot.data;
-                                  // final userInfo = userDoc;
                                   return Column(
                                     children: [
                                       Center(
-                                        // height: 400,
-                                        // width: 500,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -254,7 +255,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                                 child: Row(
                                                   children: [
                                                     const Text(
-                                                      'Active Company   ',
+                                                      'Active Companies   ',
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -273,7 +274,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                                                 child: Row(
                                                   children: [
                                                     const Text(
-                                                      'Active user   ',
+                                                      'Active Individual user   ',
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -334,7 +335,7 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
                               );
                             } else {
                               return const Center(
-                                child: Text("well"),
+                                child: Text(""),
                                 //CircularProgressIndicator(),
                               );
                             }

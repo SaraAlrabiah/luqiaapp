@@ -103,7 +103,7 @@ class _SignupPage extends State<SignupPage> {
                                 decoration:
                                 const InputDecoration(hintText: "Enter email"),
                                 validator: (text) {
-                                  if (!(text!.contains('@')) && text.isEmpty) {
+                                  if (!(text!.contains('@')) || text.isEmpty) {
                                     return "Enter a valid email address!";
                                   }
                                   return null;

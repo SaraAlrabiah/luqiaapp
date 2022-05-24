@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
 
@@ -53,10 +54,10 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
                 backgroundColor: Colors.white,
-                title: const Text('Group Information' , style: TextStyle(color: Colors.black),),
+                title:  Text('Group Information'.tr , style: TextStyle(color: Colors.black),),
                 leading:  IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded , color: Colors.black,),
-                  tooltip: 'back',
+                  icon: const Icon(Icons.arrow_back_ios , color: Colors.black,),
+                  tooltip: 'back'.tr,
                   onPressed: () {
                     Navigator.pop(
                       context,
@@ -67,16 +68,14 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                 ),
 
                 bottom: TabBar(
-                  controller: _tabController,
-                  tabs: const <Widget>[
-                    Tab(
-                      icon: Icon(Icons.group , color: Colors.black,),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.person , color: Colors.black,),
-                    ),
+                    indicatorColor:  Color.fromRGBO(	83, 83, 83, 1),
+                    labelColor: Color.fromRGBO(	83, 83, 83, 1),
+                    controller: _tabController,
+                    tabs:  <Widget>[
+                      Tab(text: 'Meetings'.tr, icon: Icon(Icons.meeting_room , color: Colors.black,)),
+                      Tab(text: 'Group Member'.tr, icon: Icon(Icons.person , color: Colors.black,)),
 
-                  ],
+                    ]
                 ),
               ),
               body:
@@ -85,7 +84,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                 children: <Widget>[
                   SingleChildScrollView(
                     child:Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: <Widget>[
                         StreamBuilder(
                           stream:
@@ -111,6 +110,8 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
 
                                       title: Text(document['MeetingTitle']),
                                       subtitle:Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Text(document['MeetingDescription']),
 
@@ -141,7 +142,7 @@ class _GroupDetailState extends State<GroupDetail> with TickerProviderStateMixin
                                       ),
                                       trailing: IconButton(
                                         icon: const Icon(Icons.details),
-                                        tooltip: 'add this user',
+                                        tooltip: 'Group details'.tr,
                                         onPressed: () async {
                                           final meetingId = document['MeetingID'];
 

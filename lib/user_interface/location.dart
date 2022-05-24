@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luqiaapp/operation/location_operation.dart';
 import 'package:luqiaapp/operation/meeting_operation.dart';
@@ -163,7 +164,7 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
         foregroundColor: Colors.white70,
         shadowColor: Colors.black26,
         backgroundColor: Colors.white,
-        title: const Text('Location SetUp'),
+        title:  Text('Location SetUp'.tr, style: TextStyle(color: Colors.black),),
         leading: IconButton(
           color: Colors.black,
           onPressed: () {
@@ -181,7 +182,7 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
           IconButton(
             icon: const Icon(Icons.add),
             color: Colors.black,
-            tooltip: 'Add',
+            tooltip: 'Add'.tr,
             onPressed: () {
               MeetingOperation.addMeetingTime(meetingTitle, meetingDescreiption, groupId, dateTime , email , newPoint);
               Navigator.push(
@@ -205,7 +206,7 @@ class _MapLocationState extends State<MapLocation> with TickerProviderStateMixin
                 child: TextFormField(
                   controller: _search,
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(hintText: 'Search for meeting location '),
+                  decoration:  InputDecoration(hintText: 'Search for meeting location '.tr),
                   onChanged: (value){
                   },
                 ),

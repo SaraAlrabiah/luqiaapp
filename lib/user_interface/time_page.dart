@@ -63,7 +63,7 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
             ]),
         leading:  IconButton(
           icon: const Icon(Icons.arrow_back_ios_outlined , color: Colors.black,),
-          tooltip: 'back',
+          tooltip: 'back'.tr,
           onPressed: () {
             Navigator.pop(
               context,
@@ -73,7 +73,7 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add , color: Colors.black,),
-            tooltip: 'Add',
+            tooltip: 'Add'.tr,
             onPressed: () {
               print(meetingDescreiption);
               Navigator.push(
@@ -94,7 +94,7 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
       body: Column(
         children: [
           ButtonHeaderWidget(
-            title: 'DateTime',
+            title: 'DateTime'.tr,
             text: getText(),
             onClicked: () => pickDateTime(context),
           ),

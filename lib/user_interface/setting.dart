@@ -70,14 +70,14 @@ class _SettingPageState extends State<SettingPage>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Welcome'.tr,
+                        'Settings'.tr,
                         style: const TextStyle(
                             color: Colors.black,
                             //  fontWeight: ,
                             // fontFamily: titleFontFamily,
-                            fontSize: 25.0),
+                            fontSize: 20.0),
                       ),
-                      Text('    $name'),
+
                     ]),
                 leading: IconButton(
                   onPressed: () {
@@ -90,15 +90,14 @@ class _SettingPageState extends State<SettingPage>
                   icon: const Icon(Icons.arrow_back_ios , color: Colors.black,),
                 ),
                 actions: <Widget>[
-                  IconButton(
-
-                    icon: const Icon(Icons.logout , color: Colors.black,) ,
-
-                    tooltip: 'Logout',
-                    onPressed: () {
-                      AuthHelper.logOut();
-                    },
-                  ),
+                  // IconButton(
+                  //   color: Colors.black,
+                  //   icon: const Icon(Icons.logout),
+                  //   tooltip: 'Logout',
+                  //   onPressed: () {
+                  //     AuthHelper.logOut();
+                  //   },
+                  // ),
                 ],
               ),
               body: SingleChildScrollView(
@@ -151,16 +150,24 @@ class _SettingPageState extends State<SettingPage>
                                         print(size.width);
                                         return SizedBox(
                                           width: size.width * 0.99,
-                                          height: size.height * 0.40,
+                                          height: size.height * 0.50,
                                           child:  Column(
                                             children: [
                                               Card(
 
                                               //  color: Colors.grey[200],
                                                 child: Column(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Card(
+
+                                                //color: Colors.grey[200],
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.max,
                                                   children: [
                                                     const SizedBox(height: 30.0, width: 30.0),
                                                     Text(
@@ -202,7 +209,7 @@ class _SettingPageState extends State<SettingPage>
                                                                 _paymentItems.add(
                                                                     const PaymentItem(
                                                                         amount:
-                                                                        '10',
+                                                                        '200',
                                                                         label:
                                                                         'Luqia'));
                                                               });
@@ -234,13 +241,13 @@ class _SettingPageState extends State<SettingPage>
                                                                 _paymentItems.add(
                                                                     const PaymentItem(
                                                                         amount:
-                                                                        '100',
+                                                                        '300',
                                                                         label:
                                                                         'Luqia'));
                                                               });
                                                             },
                                                             child:
-                                                            Text('1 Year'.tr)),
+                                                            Text('3 Month'.tr)),
                                                         IconButton(
                                                           icon: Icon(
                                                             Icons.star,
@@ -282,7 +289,7 @@ class _SettingPageState extends State<SettingPage>
                                                                     .length);
                                                                 _paymentItems.add(
                                                                     PaymentItem(
-                                                                      amount: '7',
+                                                                      amount: '1000',
                                                                       label: 'Luqia',
                                                                       status:
                                                                       PaymentItemStatus
@@ -293,7 +300,7 @@ class _SettingPageState extends State<SettingPage>
                                                               });
                                                             },
                                                             child:
-                                                            Text('1 Month'.tr)),
+                                                            Text('1 Year'.tr)),
                                                         ElevatedButton(
                                                             style: ElevatedButton
                                                                 .styleFrom(
@@ -319,12 +326,12 @@ class _SettingPageState extends State<SettingPage>
                                                               _paymentItems.clear();
                                                               _paymentItems.add(
                                                                   const PaymentItem(
-                                                                      amount: '70',
+                                                                      amount: '3000',
                                                                       label:
                                                                       'Luqia'));
                                                             },
                                                             child:
-                                                            Text('1 Year'.tr)),
+                                                            Text('5 Years'.tr)),
                                                         IconButton(
                                                           icon: Icon(
                                                             Icons.star,
@@ -440,13 +447,13 @@ class _SettingPageState extends State<SettingPage>
                                                           )
                                                         ]),
                                                     SizedBox(
-                                                      height: size.height * 0.05,
+                                                      height: size.height * 0.02,
                                                     )
                                                   ],
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: size.height *0.05,
+                                                height: size.height *0.02,
                                               ),
                                               Button(onPressed: () async {
 
@@ -457,16 +464,19 @@ class _SettingPageState extends State<SettingPage>
                                                         builder: (_) =>   ReqPage(uid: uid)
                                                     ));
 
-                                              }, text: 'Requests'),
+                                              }, text: 'Requests'.tr),
 
                                             ],
                                           )
-                                        );
+                                        ),
+    ]
+                                    ),
+                                    );
                                       } else if ((user)['role'] ==
                                           'normalUser') {
                                         return SizedBox(
                                           width: size.width * 0.99,
-                                          height: size.height * 0.45,
+                                          height: size.height * 0.50,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.stretch,
                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -780,7 +790,7 @@ class _SettingPageState extends State<SettingPage>
                                                         builder: (_) =>   ReqPage(uid: uid)
                                                     ));
 
-                                              }, text: 'Requests')
+                                              }, text: 'Requests'.tr)
                                             ],
                                           )
 
@@ -877,7 +887,7 @@ class _SettingPageState extends State<SettingPage>
     ),
           ],
         ),
-        const SizedBox(height: 50.0),
+        const SizedBox(height: 30.0),
         Row(
           children: [
             Text(

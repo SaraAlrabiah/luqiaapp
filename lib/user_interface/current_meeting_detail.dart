@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:highlight_text/highlight_text.dart';
+import 'package:get/get.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
 import 'package:luqiaapp/operation/meeting_operation.dart';
@@ -21,43 +21,7 @@ final groupId;
 
 class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
     with TickerProviderStateMixin {
-  final Map<String, HighlightedWord> _highlights = {
-    'flutter': HighlightedWord(
-      onTap: () => print('flutter'),
-      textStyle: const TextStyle(
-        color: Colors.blue,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'voice': HighlightedWord(
-      onTap: () => print('voice'),
-      textStyle: const TextStyle(
-        color: Colors.green,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'subscribe': HighlightedWord(
-      onTap: () => print('subscribe'),
-      textStyle: const TextStyle(
-        color: Colors.red,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'like': HighlightedWord(
-      onTap: () => print('like'),
-      textStyle: const TextStyle(
-        color: Colors.blueAccent,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'comment': HighlightedWord(
-      onTap: () => print('comment'),
-      textStyle: const TextStyle(
-        color: Colors.green,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  };
+
 
   late stt.SpeechToText _speech;
   bool _isListening = false;
@@ -93,8 +57,8 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
                 backgroundColor: Colors.white,
-                title: const Text(
-                  'Current Meeting Information',
+                title:  Text(
+                  'Current Meeting Information'.tr,
                   style: TextStyle(color: Colors.black),
                 ),
                 leading: IconButton(
@@ -176,15 +140,7 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                                 size.height * 0.5,
                                 size.width * 0.1,
                                 size.height * 0.1),
-                            child: TextHighlight(
-                              text: _text,
-                              words: _highlights,
-                              textStyle: const TextStyle(
-                                fontSize: 22.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                            child: Text(_text),
                           ),
                         ),
                         ElevatedButton(
@@ -196,7 +152,7 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
                                 MeetingOperation.addComment(meetingId, _text , groupId);
                               }
                             },
-                            child: Text("Send"))
+                            child: Text("Send".tr))
                       ],
                     )
                   ],
@@ -233,3 +189,4 @@ class _CurrentMeetingDetailState extends State<CurrentMeetingDetail>
     }
   }
 }
+

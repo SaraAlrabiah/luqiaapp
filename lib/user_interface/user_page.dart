@@ -63,11 +63,11 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                         'Welcome'.tr,
                         style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 20.0),
+                            fontSize: 17.0),
                       ),
                       Text('    $name',  style: const TextStyle(
                           color: Colors.black54,
-                          fontSize: 20.0),
+                          fontSize: 15.0),
                       ),
                     ]),
                 leading: IconButton(
@@ -81,7 +81,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                   IconButton(
                     color: Colors.black,
                     icon: const Icon(Icons.logout),
-                    tooltip: 'Logout',
+                    tooltip: 'Logout'.tr,
                     onPressed: () {
                       AuthHelper.logOut();
                     },
@@ -92,9 +92,9 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                     labelColor: Color.fromRGBO(	83, 83, 83, 1),
                     controller: _tabController,
                     tabs:  <Widget>[
-                Tab(text: 'Dashboard', icon: Icon(Icons.dashboard , color: Colors.black,)),
-                Tab(text: 'Groups', icon: Icon(Icons.group , color: Colors.black,)),
-                Tab(text: 'Following', icon: Icon(Icons.person , color: Colors.black,)),
+                Tab(text: 'Dashboard'.tr, icon: Icon(Icons.dashboard , color: Colors.black,)),
+                Tab(text: 'Groups'.tr, icon: Icon(Icons.group , color: Colors.black,)),
+                Tab(text: 'Following'.tr, icon: Icon(Icons.person , color: Colors.black,)),
 
               ]
                 ),
@@ -146,8 +146,8 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                       children: [
-                                                        const Text(
-                                                          'Created Group   ',
+                                                         Text(
+                                                          'Created Group   '.tr,
                                                           style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.bold,
@@ -168,8 +168,8 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                       children: [
-                                                        const Text(
-                                                          'Created Meeting   ',
+                                                         Text(
+                                                          'Created Meeting   '.tr,
                                                           style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.bold,
@@ -197,8 +197,8 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                       children: [
-                                                        const Text(
-                                                          'Following   ',
+                                                         Text(
+                                                          'Following   '.tr,
                                                           style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.bold,
@@ -218,9 +218,10 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                                   child: Card(
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      // crossAxisAlignment: CrossAxisAlignment.center,
                                                       children: [
-                                                        const Text(
-                                                          'Coming Up Meetings   ',
+                                                         Text(
+                                                          'Coming Up Meetings     '.tr,
                                                           style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.bold,
@@ -249,8 +250,8 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
                                                       children: [
-                                                        const Text(
-                                                          'Req   ',
+                                                         Text(
+                                                          'Requests   '.tr,
                                                           style: TextStyle(
                                                             fontWeight:
                                                             FontWeight.bold,
@@ -321,7 +322,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                           children: [
                                             IconButton(
                                               icon: const Icon(Icons.details),
-                                              tooltip: 'add this user',
+                                              tooltip: 'Group details'.tr,
                                               onPressed: () async {
                                                 final groupId =
                                                     document['groupId'];
@@ -342,7 +343,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                             ),
                                             IconButton(
                                               icon: const Icon(Icons.add),
-                                              tooltip: 'add this user',
+                                              tooltip: 'add new member'.tr,
                                               onPressed: () async {
                                                 final groupId =
                                                     document['groupId'];
@@ -366,7 +367,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                             ),
                                             IconButton(
                                               icon: const Icon(Icons.date_range_rounded),
-                                              tooltip: 'Create a meeting',
+                                              tooltip: 'Create a meeting'.tr,
                                               onPressed: () async {
                                                 final groupId =
                                                 document['groupId'];
@@ -396,7 +397,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
 
                                         trailing: IconButton(
                                           icon: const Icon(Icons.details),
-                                          tooltip: 'add this user',
+                                          tooltip: 'Group details'.tr,
                                           onPressed: () async {
                                             final groupId = document['groupId'];
 
@@ -427,7 +428,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                               MaterialPageRoute(
                                 builder: (_) => const GroupUserPage(),
                               ));
-                        }, text: 'Create Group')
+                        }, text: 'Create Group'.tr)
 
                       ],
                     ),
@@ -462,7 +463,7 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                       // subtitle: Text(document['role'])  ,
                                       trailing: IconButton(
                                         icon: const Icon(Icons.delete),
-                                        tooltip: 'delete this user',
+                                        tooltip: 'delete this user'.tr,
                                         onPressed: () async {
                                           final uid = currentUser.uid;
                                           final userId = document['id'];
@@ -477,9 +478,6 @@ class _UserPageState extends State<UserPage> with TickerProviderStateMixin {
                                           // Dashboard.userDashboard(uid);
                                         },
                                       ),
-
-                                      // title: Text((document.data as Map<String, dynamic>)['email'] ),
-                                      // title: Text(document.data()! ['email']),
                                     );
                                   } else {
                                     return Center(child: Row());

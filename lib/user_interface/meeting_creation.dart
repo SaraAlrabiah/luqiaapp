@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:luqiaapp/main.dart';
 import 'package:luqiaapp/user_interface/time_page.dart';
 import 'login.dart';
@@ -68,7 +69,7 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
                 backgroundColor: Colors.white,
-                title: const Text('Create Meeting ',style: TextStyle(
+                title:  Text('Create Meeting '.tr,style: TextStyle(
                     color: Colors.black,
                 ),),
                 leading: IconButton(
@@ -91,67 +92,70 @@ class _MeetingCreationState extends State<MeetingCreation> with TickerProviderSt
 
                     child: ListView(
                         children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(height: size.height * 0.03),
-                          SizedBox(height: size.height * 0.03),
-                          const SizedBox(height: 100.0),
-                          const Text(
-                            "Create Meeting",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20.0),
-                          ),
-                          const SizedBox(height: 20.0),
-                          TextFormField(
-                            controller: _MeetingTitleController,
-                            decoration: const InputDecoration(
-                                hintText: "Enter Meeting Title"),
-                            validator: (text) {
-                              if (/*!(text!.contains()) &&*/ text!.isEmpty) {
-                                return "Enter a valid Meeting Title";
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 10.0),
-                          TextFormField(
-                            controller: _MeetingDescriptionController,
-                            decoration: const InputDecoration(
-                                hintText: "Enter Meeting Description"),
-                            validator: (text) {
-                              if ( text!.isEmpty) {
-                                return "Enter a valid Meeting Description";
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 10.0),
-                          const SizedBox(height: 10.0),
-                          Button(onPressed: () async {
-                            _saveForm();
-                            if (_MeetingDescriptionController.text.isEmpty ||
-                                _MeetingTitleController.text.isEmpty) {
-                              return;
-                            }
+                    SizedBox(height: size.height * 0.10),
+                    SizedBox(
+                        height: size.height * 0.70,
+                        width: size.width * 0.90,
+                        child: Card(
 
-                            try {
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>     DatetimePickerWidget(meetingTitle: _MeetingTitleController.text , meetingDescreiption: _MeetingDescriptionController.text, groupId: groupId, email: email,  ),
-                                  ));
-                            } catch (e) {
-                              if (kDebugMode) {
-                                print(e);
+                          child: Column(
+                            children: [
+                            TextFormField(
+                              controller: _MeetingTitleController,
+                              decoration:  InputDecoration(
+                                  hintText: "Enter Meeting Title".tr),
+                              validator: (text) {
+                                if (/*!(text!.contains()) &&*/ text!.isEmpty) {
+                                  return "Enter a valid Meeting Title".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 10.0),
+                            TextFormField(
+                              controller: _MeetingDescriptionController,
+                              decoration:  InputDecoration(
+                                  hintText: "Enter Meeting Description".tr),
+                              validator: (text) {
+                                if ( text!.isEmpty) {
+                                  return "Enter a valid Meeting Description".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                             SizedBox(height: size.height * 0.1),
+                            Button(onPressed: () async {
+                              _saveForm();
+                              if (_MeetingDescriptionController.text.isEmpty ||
+                                  _MeetingTitleController.text.isEmpty) {
+                                return;
                               }
-                            }
-                          }, text: 'Add')
 
-                        ],
+                              try {
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>     DatetimePickerWidget(meetingTitle: _MeetingTitleController.text , meetingDescreiption: _MeetingDescriptionController.text, groupId: groupId, email: email,  ),
+                                    ));
+                              } catch (e) {
+                                if (kDebugMode) {
+                                  print(e);
+                                }
+                              }
+                            }, text: 'Add'.tr)
+
+                          ],
+                        ),
                       ),
-                    ]),
+                    )
+                    ]
+                    ),
+    ]
+                    ),
                   ),
                 )
             //   ]

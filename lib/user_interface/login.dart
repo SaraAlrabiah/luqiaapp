@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _emailController,
 
                           decoration:
-                              const InputDecoration(labelText: 'Email Address'),
+                              const InputDecoration(labelText: 'Email Address' ,  ),
                           validator: (text) {
                             if (!(text!.contains('@')) && text.isNotEmpty ||
                                 text.isEmpty) {
@@ -134,10 +134,10 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (_) => const SignupPage(),
                                   ));
                             },
-                            text: "Create Account As Individual"),
-                        SizedBox(
-                          height: size.height * 0.03,
-                        ),
+                            text: "Sign up as individual"),
+                        // SizedBox(
+                        //   height: size.height * 0.03,
+                        // ),
                         Button(
                             onPressed: () {
                               Navigator.push(

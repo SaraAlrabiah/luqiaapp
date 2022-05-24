@@ -27,7 +27,6 @@ class GroupPage extends StatefulWidget {
 }
 
 class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
-  late TabController _tabController;
 
   var groupId;
   var groupName;
@@ -38,7 +37,6 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 1, vsync: this);
 
   }
 
@@ -49,9 +47,6 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-
-
-            // ignore: non_constant_identifier_names
             var currentUser = FirebaseAuth.instance.currentUser;
             final uid = currentUser!.uid;
             return Scaffold(
@@ -70,20 +65,11 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
                           ),
                         ));
                   },
-                  icon: const Icon(Icons.backspace_outlined),
+                  icon: const Icon(Icons.arrow_back_ios_outlined),
                 ),
-                bottom: TabBar(
-                  controller: _tabController,
-                  tabs: const <Widget>[
-                    Tab(
-                      icon: Icon(Icons.cloud_outlined ),
-                    ),
 
-                  ],
-                ),
               ),
-              body: TabBarView(controller: _tabController, children: <Widget>[
-                Center(
+              body: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -147,7 +133,7 @@ class _GroupPageState extends State<GroupPage> with TickerProviderStateMixin {
                   ),
                 ),
 
-              ]),
+
             );
           } else {
             return LoginPage();

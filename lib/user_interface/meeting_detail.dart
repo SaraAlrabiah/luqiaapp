@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:luqiaapp/operation/auth_helper.dart';
 import 'package:luqiaapp/operation/dashboard.dart';
 import 'package:luqiaapp/operation/meeting_operation.dart';
@@ -51,11 +52,11 @@ class _MeetingDetailState extends State<MeetingDetail>
                 foregroundColor: Colors.white70,
                 shadowColor: Colors.black26,
                 backgroundColor: Colors.white,
-                title: const Text('Meeting Information' , style: TextStyle(color: Colors.black),),
+                title:  Text('Meeting Information'.tr , style: TextStyle(color: Colors.black),),
                 leading: IconButton(
                   color: Colors.black,
                   icon: const Icon(Icons.arrow_back_ios_outlined),
-                  tooltip: 'back',
+                  tooltip: 'back'.tr,
                   onPressed: () {
                     Navigator.pop(
                       context,
@@ -92,9 +93,13 @@ class _MeetingDetailState extends State<MeetingDetail>
                                     leading: const Icon(Icons.date_range),
                                     title: Text(document['MeetingTitle']),
                                     subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Text(document['MeetingDescription']),
                                         Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(document['MeetingDay']),
                                             const Text(" / "),
@@ -108,27 +113,27 @@ class _MeetingDetailState extends State<MeetingDetail>
                                           ],
                                         ),
                                         Row(
-                                          children: const [
-                                            Text("Meeting Coming By "),
+                                          children:  [
+                                            Text("Meeting Coming By ".tr),
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Text(document['ComingByDay']),
-                                            Text(" days "),
+                                            Text(" days ".tr),
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Text(document['ComingByHours']),
-                                            const Text(" hours "),
+                                             Text(" hours ".tr),
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Text(document['ComingByMin']
                                                 .toString()),
-                                            const Text(" min "),
+                                             Text(" min ".tr),
                                           ],
                                         ),
                                         Row(
@@ -143,7 +148,7 @@ class _MeetingDetailState extends State<MeetingDetail>
                                             Text('(', style: TextStyle(fontSize: 7,  ),),
                                             Text(document['MeetingLocationLat']
                                                 .toString(), style: TextStyle(fontSize: 7),),
-                                            const Text(","),
+                                            const Text("," , style: TextStyle(fontSize: 7),),
                                             Text(document['MeetingLocationLng']
                                                 .toString() ,style: TextStyle(fontSize: 7),),
                                             Text(')', style: TextStyle(fontSize: 7),),
@@ -182,8 +187,8 @@ class _MeetingDetailState extends State<MeetingDetail>
                                     leading: const Icon(Icons.date_range),
                                     title: Text(document['MeetingTitle']),
                                     subtitle: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Text(document['MeetingDescription']),
                                         Row(
@@ -201,8 +206,10 @@ class _MeetingDetailState extends State<MeetingDetail>
                                         ),
                                         Row(
                                           children: [
-                                            Text(document['ComingByMin']
-                                                .toString()),
+                                            Text(
+                                                // document['ComingByMin'].toString()
+                                              'Done'.tr
+                                            ),
                                           ],
                                         ),
                                          Row(
@@ -217,7 +224,7 @@ class _MeetingDetailState extends State<MeetingDetail>
                                                           Text('(', style: TextStyle(fontSize: 7,  ),),
                                                           Text(document['MeetingLocationLat']
                                                               .toString(), style: TextStyle(fontSize: 7),),
-                                                          const Text(","),
+                                                          const Text(",", style: TextStyle(fontSize: 7),),
                                                           Text(document['MeetingLocationLng']
                                                               .toString() ,style: TextStyle(fontSize: 7),),
                                                           Text(')', style: TextStyle(fontSize: 7),),

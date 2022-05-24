@@ -35,7 +35,6 @@ class _ReqPageState extends State<ReqPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -97,8 +96,8 @@ class _ReqPageState extends State<ReqPage> with TickerProviderStateMixin {
                   labelColor: Color.fromRGBO(	83, 83, 83, 1),
                   controller: _tabController,
                   tabs:  <Widget>[
-                    Tab(text: 'Following Request', icon: Icon(Icons.person_add , color: Colors.black,)),
-                    Tab(text: 'Group Request', icon: Icon(Icons.group_add , color: Colors.black,)),
+                    Tab(text: 'Following Request'.tr, icon: Icon(Icons.person_add , color: Colors.black,)),
+                    Tab(text: 'Group Request'.tr, icon: Icon(Icons.group_add , color: Colors.black,)),
 
                   ],
                 ),
@@ -139,14 +138,11 @@ class _ReqPageState extends State<ReqPage> with TickerProviderStateMixin {
                                       leading: const Icon(Icons.person),
 
                                       title: Text(document['email']),
-                                      // subtitle: Text(document['role'])  ,
                                       trailing: IconButton(
                                         icon: const Icon(Icons.check_box),
-                                        tooltip: 'accept this user',
+                                        tooltip: 'accept this user'.tr,
                                         onPressed: () async {
                                           final uid = currentUser.uid;
-                                          //  Dashboard.userDashboard(uid);
-                                          // Dashboard.userDashboard(uid);
                                           final currentEmail =
                                               currentUser.email;
                                           final documentId = document.id;
@@ -199,34 +195,28 @@ class _ReqPageState extends State<ReqPage> with TickerProviderStateMixin {
                                 itemBuilder: (context, index) {
                                   DocumentSnapshot document =
                                   snapshot.data!.docs[index];
-                                  // final users = docs[index].data();
-                                  //  final userDoc = snapshot.data;
-                                  // final userInfo = userDoc;
-                                  // ignore: prefer_const_constructors
-
                                   return ListTile(
                                     leading: const Icon(Icons.group),
                                     title: Column(children: [
                                       Row(children: [
-                                        const Text('Group Name      '),
+
                                         Text(document['GroupName']),
                                       ]),
                                     ]),
                                     subtitle: Column(
                                       children: [
                                         Row(children: [
-                                          const Text("Group Activity      "),
+
                                           Text(document['GroupActivity']),
                                         ]),
                                         Row(children: [
-                                          const Text("Created By      "),
                                           Text(document['CreateByEmail']),
                                         ]),
                                       ],
                                     ),
                                     trailing: IconButton(
                                       icon: const Icon(Icons.check_box),
-                                      tooltip: 'accept this group',
+                                      tooltip: 'accept this group'.tr,
                                       onPressed: () async {
                                         final uid = currentUser.uid;
                                         final currentUserEmail =

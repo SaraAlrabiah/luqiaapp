@@ -26,7 +26,6 @@ class _AddUserPageState extends State<AddUserPage> with TickerProviderStateMixin
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -36,7 +35,6 @@ class _AddUserPageState extends State<AddUserPage> with TickerProviderStateMixin
             final uid = currentUser!.uid;
             var email = currentUser.email;
             Dashboard.userDashboard(uid,email! );
-            var name = currentUser.displayName;
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white70,
@@ -46,14 +44,12 @@ class _AddUserPageState extends State<AddUserPage> with TickerProviderStateMixin
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Welcome'.tr,
+                        'Add users'.tr,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20.0),
                       ),
-                      Text('    $name', style:const TextStyle(
-                          color: Colors.black,
-                          fontSize: 25.0), ),
+
                     ]),
                 leading: IconButton(
                   color: Colors.black,
@@ -63,16 +59,7 @@ class _AddUserPageState extends State<AddUserPage> with TickerProviderStateMixin
                   },
                   icon: const Icon(Icons.arrow_back_ios_outlined),
                 ),
-                actions: <Widget>[
-                  IconButton(
-                    color: Colors.black,
-                    icon: const Icon(Icons.logout),
-                    tooltip: 'Logout',
-                    onPressed: () {
-                      AuthHelper.logOut();
-                    },
-                  ),
-                ],
+
 
               ),
               body:
@@ -103,16 +90,15 @@ class _AddUserPageState extends State<AddUserPage> with TickerProviderStateMixin
                                           currentUser
                                               .uid ) {
                                     return ListTile(
-                                      selectedColor: Colors.blue,
-                                      textColor: Colors.green,
+
 
                                       title: Text(document['email']),
-                                      subtitle: Text(document['role']),
+                                      // subtitle: Text(document['role']),
                                       trailing: IconButton(
                                         icon:  const Icon(
                                           Icons.add,
                                         ),
-                                        tooltip: 'add this user',
+                                        tooltip: 'add this user'.tr,
                                         onPressed: () async {
                                           final email = currentUser.email;
                                           final userId = document['id'];
